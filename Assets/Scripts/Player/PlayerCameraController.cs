@@ -4,19 +4,45 @@ using UnityEngine;
 
 public class PlayerCameraController : MonoBehaviour
 {
-    public Transform follow;
+    private const float MIN_Y_ANGLE = -30.0f;
+    private const float MAX_Y_ANGLE = 75.0f;
 
-    private float maxDistance = 10.0f;
+    [Tooltip("Object the camera will follow")]
+    public Transform follow;
+    private float maxDistance = -5.0f;
+    private float inpX;
+    private float inpY;
 
     // Start is called before the first frame update
     void Start()
     {
+        
+    }
+
+    void OnEnable()
+    {
+        transform.eulerAngles = new Vector3(25,0,0);
+    }
+
+    void Update() {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+
+        inpX += Input.GetAxis("Mouse X");
+        inpY += Input.GetAxis("Mouse Y");
+        inpY = Mathf.Clamp(inpY, MIN_Y_ANGLE, MAX_Y_ANGLE);
 
     }
 
     //Want to run after player movement
     void LateUpdate()
     {
-        
+        Vector3 followDir = new Vector3(0,0,-maxDistance);
+        Quaternion inpRotation = Quaternion.Euler(inpY, inpX, 0);
+
+        //Needs changing for collisions as it will always be at max distance
+        transform.position = (follow.position + inpRotation * followDir);
+
+        transform.LookAt(follow);
     }
 }
