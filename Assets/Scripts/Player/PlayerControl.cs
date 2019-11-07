@@ -12,11 +12,17 @@ public class PlayerControl : MonoBehaviour
     public Transform playerCam;
     private CharacterController _controller;
     private Vector3 velocity;
+
+    private Vector3 preForwardCam;
+    private bool preMoving = false;
+    private bool shmupMode = false;
+    private Vector3 shmupDir = new Vector3(0,0,0);
     
     private int doubleJump = 1;
     private float inputH;
     private float inputV;
     private bool jump = false;
+    private bool sprint = false;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +32,20 @@ public class PlayerControl : MonoBehaviour
     }
 
     void Update() {
+        //To mitigate snap when switching camera
+        Vector3 forwardCam = Vector3.ProjectOnPlane(playerCam.forward, Vector3.up).normalized;
+        if(shmupMode) {
+            if(!preForwardCam.Equals(Vector3.zero) && velocity.x != 0 && velocity.z != 0) {
+                preMoving = true;
+            }
+            else {
+                preMoving = false;
+            }
+        }
+        else {
+            preMoving = false;
+        }
+
         inputH = Input.GetAxis("Horizontal");
         inputV = Input.GetAxis("Vertical");
         if(!_controller.isGrounded && doubleJump < 1) {
@@ -34,6 +54,18 @@ public class PlayerControl : MonoBehaviour
         if(Input.GetButtonDown("Jump")) {
             jump = true;
         }
+        if(Input.GetButtonDown("Sprint")) {
+            if(!sprint) {
+                moveSpeed *= 2;
+                sprint = true;
+            }
+            else {
+                sprint = false;
+                moveSpeed /= 2;
+            }
+        }
+        shmupDir.x = Input.GetAxis("Mouse X_");
+        shmupDir.z = Input.GetAxis("Mouse Y_");
     }
 
     void FixedUpdate()
@@ -47,20 +79,33 @@ public class PlayerControl : MonoBehaviour
         Vector3 forwardCam = Vector3.ProjectOnPlane(playerCam.forward, Vector3.up).normalized;
         Vector3 rightCam = Vector3.ProjectOnPlane(playerCam.right, Vector3.up).normalized;
 
-        if(forwardCam.Equals(Vector3.zero)) {
-            velocity.x = inputH * moveSpeed;
-            velocity.z = inputV * moveSpeed;
+        //To mitigate snap when switching camera
+        if(shmupMode) {
+            if(preMoving) {
+                forwardCam = preForwardCam;
+            }
+            else {
+                velocity.x = inputH * moveSpeed;
+                velocity.z = inputV * moveSpeed;
+            }
         }
-        else {
+
+        if(!forwardCam.Equals(Vector3.zero)) {
             //Multiply with input to get the angle at which to move
             velocity += (rightCam * inputH + forwardCam * inputV);
             velocity = velocity * moveSpeed;
         }
-
+    
+        preForwardCam = forwardCam;
 
         Vector3 face = new Vector3(velocity.x, 0, velocity.z);
-        if(face != Vector3.zero) {
+        if(face != Vector3.zero && !shmupMode) {
             transform.forward = face;
+        }
+        else {
+            if(!shmupDir.Equals(Vector3.zero)) {
+                transform.forward = shmupDir;
+            }
         }
         
         //resets any change to y velocity from directional inp
@@ -86,6 +131,14 @@ public class PlayerControl : MonoBehaviour
         }
 
         _controller.Move(velocity * Time.deltaTime);
+    }
+
+    public void toggleShmupMode(bool toggle) {
+        shmupMode = toggle;
+    }
+
+    public bool isShmup() {
+        return shmupMode;
     }
 }
 
