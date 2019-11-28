@@ -103,7 +103,7 @@ public class PlayerControl : MonoBehaviour
             transform.forward = face;
         }
         else {
-            if(!shmupDir.Equals(Vector3.zero)) {
+            if(shmupMode && !shmupDir.Equals(Vector3.zero)) {
                 transform.forward = shmupDir;
             }
         }
