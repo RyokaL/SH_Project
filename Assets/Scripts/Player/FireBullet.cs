@@ -4,7 +4,16 @@ using UnityEngine;
 
 public class FireBullet : MonoBehaviour
 {
+    //TODO: Needs overhauling per bullet type - Instead call a "fire" function in the bullet?
+    //Ice - constant velocity
+    //Wind - initial thrust
+    //Fire - No velocity - just particle effect
+    //Electric - same as ice
+    //Light - Hitscan, use a trail
+
     public GameObject bullet;
+
+    public Weapon equipped;
     public float speed;
     public Camera cam;
 
@@ -43,10 +52,8 @@ public class FireBullet : MonoBehaviour
                 fire = false;
             }
             else {
-                GameObject temp = Instantiate(bullet) as GameObject;
-                temp.transform.position = cam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, cam.nearClipPlane));
-                Rigidbody projectile = temp.GetComponent<Rigidbody>();
-                projectile.velocity = cam.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2, 0)).direction * speed;
+                Spell equippedSpell = equipped.spellPrefab;
+                equippedSpell.fire(equipped.modifiers, transform, cam);
                 fire = false;
             }
         }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpellCollision : MonoBehaviour
+public class Wind : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -12,6 +12,7 @@ public class SpellCollision : MonoBehaviour
 
     void OnCollisionEnter(Collision collision) {
         Destroy(gameObject);
+        //Generate explosion
     }
 
     // Update is called once per frame

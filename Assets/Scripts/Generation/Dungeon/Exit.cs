@@ -5,6 +5,8 @@ using UnityEngine;
 public class Exit : MonoBehaviour
 {
     public bool closed = false;
+    public GameObject exitCover = null;
+    public int voxelWidth;
 
     public void setClosed() {
         closed = true;
@@ -12,6 +14,10 @@ public class Exit : MonoBehaviour
 
     public bool isClosed() {
         return closed;
+    }
+
+    public GameObject getExitCover() {
+        return exitCover;
     }
     // Start is called before the first frame update
     void Start()

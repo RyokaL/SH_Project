@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fireball
+  m_Name: Snowball
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _EMISSION
+  m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _EMISSION _GLOSSYREFLECTIONS_OFF
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -61,10 +61,10 @@ Material:
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 10
-    - _GlossMapScale: 1
-    - _Glossiness: 0.822
-    - _GlossyReflections: 1
-    - _Metallic: 0.111
+    - _GlossMapScale: 0.304
+    - _Glossiness: 0.731
+    - _GlossyReflections: 0
+    - _Metallic: 0.123
     - _Mode: 3
     - _OcclusionStrength: 1
     - _Parallax: 0.02
@@ -74,5 +74,5 @@ Material:
     - _UVSec: 0
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 1, g: 0.16996826, b: 0, a: 1}
-    - _EmissionColor: {r: 1, g: 0.17565282, b: 0, a: 1}
+    - _Color: {r: 0.2216981, g: 0.95894223, b: 1, a: 1}
+    - _EmissionColor: {r: 0.43387324, g: 0.735849, b: 0.67523956, a: 1}

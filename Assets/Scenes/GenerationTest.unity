@@ -271,7 +271,7 @@ PrefabInstance:
     - target: {fileID: 2662548091481575221, guid: bfb79b66530aec5459320fb84f83d5a2,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2662548091481575221, guid: bfb79b66530aec5459320fb84f83d5a2,
         type: 3}
@@ -328,6 +328,23 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 684943719}
+    - target: {fileID: 2662548091367161556, guid: bfb79b66530aec5459320fb84f83d5a2,
+        type: 3}
+      propertyPath: bullet
+      value: 
+      objectReference: {fileID: 1684968079761560990, guid: ffe88bc34a09c824d960198e40e53f36,
+        type: 3}
+    - target: {fileID: 2662548091367161556, guid: bfb79b66530aec5459320fb84f83d5a2,
+        type: 3}
+      propertyPath: equipped
+      value: 
+      objectReference: {fileID: 11400000, guid: 0aab1e28fd3c7444da615dba174de615,
+        type: 2}
+    - target: {fileID: 2662548091367161558, guid: bfb79b66530aec5459320fb84f83d5a2,
+        type: 3}
+      propertyPath: m_Name
+      value: Equip
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfb79b66530aec5459320fb84f83d5a2, type: 3}
 --- !u!1 &944185955
@@ -491,7 +508,7 @@ PrefabInstance:
     - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
         type: 3}
       propertyPath: rooms.Array.size
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
         type: 3}
@@ -512,19 +529,19 @@ PrefabInstance:
     - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
         type: 3}
       propertyPath: maxRooms
-      value: 19
+      value: 84
       objectReference: {fileID: 0}
     - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
         type: 3}
       propertyPath: spawnRooms.Array.data[0]
       value: 
-      objectReference: {fileID: 4194822134762609998, guid: a13e931ae5e26df468b0c361c94b45ef,
+      objectReference: {fileID: 7886630810873526936, guid: e4f94a93815344d4f820a4f177e2151a,
         type: 3}
     - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
         type: 3}
       propertyPath: rooms.Array.data[1]
       value: 
-      objectReference: {fileID: 4194822134762609998, guid: a13e931ae5e26df468b0c361c94b45ef,
+      objectReference: {fileID: 1519769036811302972, guid: 1d99a21f8f2d17c4090d8e4d022a8df0,
         type: 3}
     - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
         type: 3}
@@ -532,6 +549,44 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1519769036811302972, guid: 1d99a21f8f2d17c4090d8e4d022a8df0,
         type: 3}
+    - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
+        type: 3}
+      propertyPath: rooms.Array.data[2]
+      value: 
+      objectReference: {fileID: 4194822134762609998, guid: a13e931ae5e26df468b0c361c94b45ef,
+        type: 3}
+    - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
+        type: 3}
+      propertyPath: rooms.Array.data[3]
+      value: 
+      objectReference: {fileID: 4194822134762609998, guid: a13e931ae5e26df468b0c361c94b45ef,
+        type: 3}
+    - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
+        type: 3}
+      propertyPath: rooms.Array.data[4]
+      value: 
+      objectReference: {fileID: 4194822134762609998, guid: a13e931ae5e26df468b0c361c94b45ef,
+        type: 3}
     m_RemovedComponents:
     - {fileID: 3793579862671357024, guid: deacad4c1c3340a41b0eff79ceb0996b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: deacad4c1c3340a41b0eff79ceb0996b, type: 3}
+--- !u!1 &3793579864011898339 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3793579862671357027, guid: deacad4c1c3340a41b0eff79ceb0996b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3793579864011898338}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3793579864011898340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3793579864011898339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc81d76a7a8cc9a41a26c68a9b80c936, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellTypes:
+  - {fileID: 11400000, guid: 678a51379c5b7614091a813763975b1a, type: 2}

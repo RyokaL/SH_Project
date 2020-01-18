@@ -42,59 +42,9 @@ public class DungeonCreator : MonoBehaviour
 
     private void generateMap() {
         //Worry about closing off unfinished exits later :)
-
-    }
-
-    private void fillGrid(Transform[] voxels) {
-        foreach(Transform t in voxels) {
-            if(grid.ContainsKey(convertRealPosToGrid(t.position))) {
-                Debug.Log("Bad");
-            }
-            grid.Add(convertRealPosToGrid(t.position), t);
-        }
-    }
-
-    private void fillGrid(Transform[] voxels, Vector3[] gridVox) {
-        for(int i = 0; i < gridVox.Length; i++) {
-            if(grid.ContainsKey(convertRealPosToGrid(gridVox[i]))) {
-                Debug.Log("Bad");
-            }
-            grid.Add(convertRealPosToGrid(gridVox[i]), voxels[i]);
-        }
-    }
-
-    private bool isColliding(Vector3[] newPos) {
-        foreach(Vector3 v in newPos) {
-            Vector3 gridPos = convertRealPosToGrid(v);
-            if(grid.ContainsKey(gridPos)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private Vector3 convertRealPosToGrid(Vector3 real) {
-        int gridX = Mathf.RoundToInt(real.x / gridSpacing);
-        int gridY = Mathf.RoundToInt(real.y / gridSpacing);
-        int gridZ = Mathf.RoundToInt(real.z / gridSpacing);
-        return new Vector3(gridX, gridY, gridZ);
-    }
-
-    private void tidyUpEditor() {
-        //Set all objects' parent to this
-        foreach(GameObject g in actualRooms) {
-            g.transform.parent = transform;
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //TODO: Move back to own method
+         //TODO: Add in different voxel size doors?
         GameObject empty;
-        if(roomsSpawned < maxRooms && roomsToProcess.Count > 0) {
-            // Debug.Log(roomsToProcess.Count);
-            // Debug.Log(roomsSpawned + "/" + maxRooms);
+        while(roomsSpawned < maxRooms && roomsToProcess.Count > 0) {
             //Choose a room to process, if all exits are closed, remove and continue
             Room linkRoom = roomsToProcess[(int)Random.Range(0, roomsToProcess.Count)];
             roomsToProcess.Remove(linkRoom);
@@ -114,27 +64,17 @@ public class DungeonCreator : MonoBehaviour
             Transform[] currExits = currRoom.getOpenExits();
             Transform exitNew = currExits[(int)Random.Range(0, currExits.Length)];
 
-            //Rotate to face link exit
-            // if(exitExisting.localEulerAngles.y < 0) {
-            //     newRoomObj.transform.Rotate(0, 180 + exitExisting.localEulerAngles.y, 0);
-            // }
-            // else {
-            //     newRoomObj.transform.Rotate(0, exitExisting.localEulerAngles.y - 180, 0);
-            // }
-
             empty = new GameObject();
             empty.transform.position = exitNew.position;
             //empty.transform.rotation = newRoomObj.transform.rotation;
             newRoomObj.transform.parent = empty.transform;
             // empty.transform.rotation = exitExisting.transform.rotation;
-            empty.transform.rotation = empty.transform.rotation * (Quaternion.FromToRotation(exitNew.right, exitExisting.right * -1));
+            if(exitNew.right != exitExisting.right) {
+                empty.transform.rotation = empty.transform.rotation * (Quaternion.FromToRotation(exitNew.right, exitExisting.right * -1));  
+            } 
             //empty.transform.right = Vector3.Reflect(exitNew.transform.right, Vector3.right);
             //empty.transform.rotation = Quaternion.Inverse(exitExisting.transform.rotation);
             empty.transform.position = exitExisting.position;
-
-            Debug.Log("z: " + exitNew.forward);
-            Debug.Log("x: " + exitNew.right);
-            Debug.Log("y: " + exitNew.up);
 
             Transform[] roomVoxels = currRoom.getVoxels();
             Vector3[] newVoxels = new Vector3[roomVoxels.Length];
@@ -203,5 +143,79 @@ public class DungeonCreator : MonoBehaviour
             }
         }
         tidyUpEditor();
+        closeDoors();
     }
+
+    private void closeDoors() {
+        //TODO: Check if we're connected to a different open exit, randomly leave some open
+        foreach(GameObject room in actualRooms) {
+            Room currRoom = room.GetComponentInChildren<Room>();
+            foreach(Transform exit in currRoom.getOpenExits()) {
+                Exit currExit = exit.GetComponent<Exit>();
+                if(currExit.isClosed()) {
+                    continue;
+                }
+                if(currExit.getExitCover() == null) {
+                    continue;
+                }
+                GameObject cover = Instantiate(currExit.getExitCover(), transform.position, transform.rotation) as GameObject;
+                GameObject empty = new GameObject();
+                
+                empty.transform.position = cover.transform.Find("Connector").position;
+                cover.transform.parent = empty.transform;
+
+                empty.transform.rotation = empty.transform.rotation * (Quaternion.FromToRotation(cover.transform.right, exit.right));
+                empty.transform.position = exit.position;
+
+                empty.transform.parent = exit;
+                currExit.setClosed();
+            }
+        }
+    }
+
+    private void fillGrid(Transform[] voxels) {
+        foreach(Transform t in voxels) {
+            if(grid.ContainsKey(convertRealPosToGrid(t.position))) {
+                //Debug.Log("Bad");
+            }
+            grid.Add(convertRealPosToGrid(t.position), t);
+        }
+    }
+
+    private void fillGrid(Transform[] voxels, Vector3[] gridVox) {
+        for(int i = 0; i < gridVox.Length; i++) {
+            if(grid.ContainsKey(convertRealPosToGrid(gridVox[i]))) {
+                //Debug.Log("Bad");
+            }
+            grid.Add(convertRealPosToGrid(gridVox[i]), voxels[i]);
+        }
+    }
+
+    private bool isColliding(Vector3[] newPos) {
+        foreach(Vector3 v in newPos) {
+            Vector3 gridPos = convertRealPosToGrid(v);
+            if(grid.ContainsKey(gridPos)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private Vector3 convertRealPosToGrid(Vector3 real) {
+        int gridX = Mathf.RoundToInt(real.x / gridSpacing);
+        int gridY = Mathf.RoundToInt(real.y / gridSpacing);
+        int gridZ = Mathf.RoundToInt(real.z / gridSpacing);
+        return new Vector3(gridX, gridY, gridZ);
+    }
+
+    private void tidyUpEditor() {
+        //Set all objects' parent to this
+        foreach(GameObject g in actualRooms) {
+            g.transform.parent = transform;
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {}
 }
