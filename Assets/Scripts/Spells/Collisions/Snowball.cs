@@ -9,43 +9,41 @@ public class Snowball : MonoBehaviour, ISpellCollision
     // Start is called before the first frame update
     void Start()
     {
-
+        
     }
 
     void OnTriggerEnter(Collider other) {
+        enemyCollision(other.gameObject);
+
         if(modifiers.pierce) {
-            if(!other.gameObject.tag.Equals("enemy")) {
+            if(!other.gameObject.tag.Equals("Enemy")) {
                 Destroy(gameObject);
             }
         }
         else {
             Destroy(gameObject);
         }
-
-        GameObject collidedObject = other.gameObject;
-        if(collidedObject.tag.Equals("enemy")) {
-            //Deal damage
-
-            if(modifiers.dot) {
-                //Also apply damage over time
-            }
-        }
     }
     void OnCollisionEnter(Collision collision) {
+        //Apply damage
+        enemyCollision(collision.gameObject);
+        
+
         if(modifiers.bounce) {
             //Do nothing, allow physics to happen
         }
         else {
             Destroy(gameObject);
         }
+    }
 
-        //Apply damage
-        GameObject collidedObject = collision.gameObject;
-        if(collidedObject.tag.Equals("enemy")) {
-            //Deal damage
+    void enemyCollision(GameObject collidedObject) {
+        if(collidedObject.tag.Equals("Enemy")) {
+            HealthControl collidedHealth = collidedObject.GetComponent<HealthControl>();
+            collidedHealth.takeDamage(modifiers.damage);
 
             if(modifiers.dot) {
-                //Also apply damage over time
+                collidedHealth.applyDot(modifiers.dotTick, modifiers.dotLength);
             }
         }
     }

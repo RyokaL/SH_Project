@@ -8,6 +8,7 @@ public class SpellMod
     public float damage = 0;
     public bool dot = false;
     public float dotTick = 0;
+    public float dotLength = 0;
     public bool pierce = false;
     public bool bounce = false;
 

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using Extensions;
 
 public class DungeonCreator : MonoBehaviour
 {
@@ -37,7 +39,11 @@ public class DungeonCreator : MonoBehaviour
 
         actualRooms.Add(newRoomObj);
 
+        var stopwatch = new System.Diagnostics.Stopwatch();
+        stopwatch.Start();
         generateMap();
+        stopwatch.Stop();
+        Debug.Log("Time taken: " + stopwatch.ElapsedMilliseconds);
     }
 
     private void generateMap() {
@@ -45,6 +51,7 @@ public class DungeonCreator : MonoBehaviour
          //TODO: Add in different voxel size doors?
         GameObject empty;
         while(roomsSpawned < maxRooms && roomsToProcess.Count > 0) {
+            roomsToProcess.Randomise();
             //Choose a room to process, if all exits are closed, remove and continue
             Room linkRoom = roomsToProcess[(int)Random.Range(0, roomsToProcess.Count)];
             roomsToProcess.Remove(linkRoom);
@@ -148,16 +155,42 @@ public class DungeonCreator : MonoBehaviour
 
     private void closeDoors() {
         //TODO: Check if we're connected to a different open exit, randomly leave some open
+        List<Transform> allExits = actualRooms.SelectMany(room => room.GetComponentInChildren<Room>().getOpenExits()).ToList(); 
+
         foreach(GameObject room in actualRooms) {
             Room currRoom = room.GetComponentInChildren<Room>();
             foreach(Transform exit in currRoom.getOpenExits()) {
                 Exit currExit = exit.GetComponent<Exit>();
+
                 if(currExit.isClosed()) {
                     continue;
                 }
                 if(currExit.getExitCover() == null) {
                     continue;
                 }
+
+                bool leaveOpen = false;
+
+                for(int i = 0; i < allExits.Count; i++) {
+                    Transform checkExit = allExits.ElementAt(i);
+
+                    if(currExit == checkExit.gameObject.GetComponent<Exit>()) {
+                        continue;
+                    }
+
+                    if(checkExit.transform.position == exit.position) {
+                        //Do random check, for now just leave open anyway
+                        leaveOpen = true;
+                        allExits.RemoveAt(i);
+                        allExits.Remove(exit);
+                        break;
+                    }
+                }
+
+                if(leaveOpen) {
+                    continue;
+                }
+
                 GameObject cover = Instantiate(currExit.getExitCover(), transform.position, transform.rotation) as GameObject;
                 GameObject empty = new GameObject();
                 

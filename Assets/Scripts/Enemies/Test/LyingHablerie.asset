@@ -9,23 +9,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bae3fb0b605d66a41ad93a1281724e9c, type: 3}
-  m_Name: New Weapon
+  m_Script: {fileID: 11500000, guid: 83f4935d90c47bd46851af36c1c1ff2f, type: 3}
+  m_Name: LyingHablerie
   m_EditorClassIdentifier: 
-  weaponName: Test Staff
-  staff: {fileID: 0}
-  cradle: {fileID: 0}
-  gem: {fileID: 0}
-  spellPrefab: {fileID: 11400000, guid: 678a51379c5b7614091a813763975b1a, type: 2}
+  maxHealth: 5
+  attack: {fileID: 11400000, guid: 678a51379c5b7614091a813763975b1a, type: 2}
   modifiers:
     damage: 1
     dot: 0
-    dotTick: 1
-    dotLength: 3
+    dotTick: 0
+    dotLength: 0
     pierce: 0
     bounce: 0
     track: 0
     numBullets: 1
     fireRate: 1
-    TTL: 10
+    TTL: 0
     range: 0
+  sightRange: 20
+  sightAngle: 360
+  speed: 2
