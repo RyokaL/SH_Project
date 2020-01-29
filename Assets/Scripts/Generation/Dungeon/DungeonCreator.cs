@@ -57,7 +57,7 @@ public class DungeonCreator : MonoBehaviour
             roomsToProcess.Remove(linkRoom);
 
             if(linkRoom.getNumOpenExits() <= 0) {
-               return;
+               continue;
             }
             //Pick an exit from the already existing room
             Transform[] linkExits = linkRoom.getOpenExits();
@@ -67,6 +67,14 @@ public class DungeonCreator : MonoBehaviour
             GameObject roomToSpawn = rooms[(int)Random.Range(0, rooms.Count)];
             GameObject newRoomObj = Instantiate(roomToSpawn, transform.position, transform.rotation) as GameObject;
             Room currRoom = newRoomObj.GetComponent<Room>();
+
+            //If both have only 1 exit available and we have other rooms, try again
+            if(currRoom.getNumOpenExits() == 1 && linkRoom.getNumOpenExits() == 1 && (roomsToProcess.Count > 0 || roomsSpawned < maxRooms / 2)) {
+                Destroy(newRoomObj);
+                roomsToProcess.Add(linkRoom);
+                continue;
+            }
+
             //Pick an exit from this room to link up
             Transform[] currExits = currRoom.getOpenExits();
             Transform exitNew = currExits[(int)Random.Range(0, currExits.Length)];

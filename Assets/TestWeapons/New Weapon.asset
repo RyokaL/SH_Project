@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bae3fb0b605d66a41ad93a1281724e9c, type: 3}
+  m_Script: {fileID: 11500000, guid: 339985c37af2472459fb82f93ff202aa, type: 3}
   m_Name: New Weapon
   m_EditorClassIdentifier: 
   weaponName: Test Staff
