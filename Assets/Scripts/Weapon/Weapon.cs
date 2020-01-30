@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu]
+[System.Serializable]
 public class Weapon : ScriptableObject
 { 
     public string weaponName;
@@ -14,4 +15,9 @@ public class Weapon : ScriptableObject
 
     public SpellMod modifiers;
 
+    public void set(string name, Spell spell, SpellMod mod) {
+        this.weaponName = name;
+        this.spellPrefab = spell;
+        this.modifiers = mod;
+    }
 }

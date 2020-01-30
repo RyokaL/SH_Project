@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc81d76a7a8cc9a41a26c68a9b80c936, type: 3}
+  m_Name: BasicTreasureGen
+  m_EditorClassIdentifier: 
+  spellTypes: {fileID: 11400000, guid: 3f1189fe5f95d084e860cd2abc732d30, type: 2}

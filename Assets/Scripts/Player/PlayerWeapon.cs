@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireBullet : MonoBehaviour
+public class PlayerWeapon : MonoBehaviour
 {
     //TODO: Needs overhauling per bullet type - Instead call a "fire" function in the bullet?
     //Ice - constant velocity
@@ -13,6 +13,7 @@ public class FireBullet : MonoBehaviour
 
     public GameObject bullet;
 
+    [SerializeField]
     public Weapon equipped;
     public float speed;
     public Camera cam;
@@ -57,5 +58,9 @@ public class FireBullet : MonoBehaviour
                 fire = false;
             }
         }
+    }
+
+    public void equipWeapon(Weapon newWeapon) {
+        equipped = newWeapon;
     }
 }

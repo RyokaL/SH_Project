@@ -346,6 +346,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Equip
       objectReference: {fileID: 0}
+    - target: {fileID: 2662548091481575222, guid: bfb79b66530aec5459320fb84f83d5a2,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bfb79b66530aec5459320fb84f83d5a2, type: 3}
 --- !u!1 &944185955
@@ -530,7 +535,7 @@ PrefabInstance:
     - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
         type: 3}
       propertyPath: maxRooms
-      value: 136
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
         type: 3}
@@ -577,23 +582,3 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 3793579862671357024, guid: deacad4c1c3340a41b0eff79ceb0996b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: deacad4c1c3340a41b0eff79ceb0996b, type: 3}
---- !u!1 &3793579864011898339 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3793579862671357027, guid: deacad4c1c3340a41b0eff79ceb0996b,
-    type: 3}
-  m_PrefabInstance: {fileID: 3793579864011898338}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3793579864011898340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3793579864011898339}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc81d76a7a8cc9a41a26c68a9b80c936, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spellTypes:
-  - {fileID: 11400000, guid: 678a51379c5b7614091a813763975b1a, type: 2}
