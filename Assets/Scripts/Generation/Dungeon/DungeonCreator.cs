@@ -11,6 +11,7 @@ public class DungeonCreator : MonoBehaviour
     [Tooltip("List of rooms with spawn points")]
     public List<GameObject> spawnRooms;
     public int gridSpacing;
+    public Material[] roomColours;
     public int maxRooms;
     //Store grid position along with voxel object
     private Dictionary<Vector3, Transform> grid;
@@ -25,6 +26,10 @@ public class DungeonCreator : MonoBehaviour
         grid = new Dictionary<Vector3, Transform>();
         roomsToProcess = new List<Room>();
         actualRooms = new List<GameObject>();
+
+        foreach(Material m in roomColours) {
+             m.SetColor("_Color", Random.ColorHSV());
+        }
     
         //Spawn initial room
         GameObject roomToSpawn = spawnRooms[(int)Random.Range(0, spawnRooms.Count)];
@@ -90,6 +95,13 @@ public class DungeonCreator : MonoBehaviour
             //empty.transform.right = Vector3.Reflect(exitNew.transform.right, Vector3.right);
             //empty.transform.rotation = Quaternion.Inverse(exitExisting.transform.rotation);
             empty.transform.position = exitExisting.position;
+
+            HeightMapGen[] terrainGen;
+            if((terrainGen = newRoomObj.GetComponentsInChildren<HeightMapGen>()) != null) {
+                foreach(HeightMapGen h in terrainGen) {
+                    h.generateHeightMap();
+                }
+            }
 
             Transform[] roomVoxels = currRoom.getVoxels();
             Vector3[] newVoxels = new Vector3[roomVoxels.Length];

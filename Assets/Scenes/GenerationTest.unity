@@ -514,7 +514,7 @@ PrefabInstance:
     - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
         type: 3}
       propertyPath: rooms.Array.size
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
         type: 3}
@@ -541,7 +541,7 @@ PrefabInstance:
         type: 3}
       propertyPath: spawnRooms.Array.data[0]
       value: 
-      objectReference: {fileID: 7886630810873526936, guid: e4f94a93815344d4f820a4f177e2151a,
+      objectReference: {fileID: 6973182517252170123, guid: 295a3cf18dd323b4693eb20008cbd4cf,
         type: 3}
     - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
         type: 3}
@@ -578,6 +578,23 @@ PrefabInstance:
       propertyPath: rooms.Array.data[5]
       value: 
       objectReference: {fileID: 4096859418727332969, guid: ea0fe2b4734ee284fb1e929591c920de,
+        type: 3}
+    - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
+        type: 3}
+      propertyPath: roomColour
+      value: 
+      objectReference: {fileID: 2100000, guid: 81edd437f5b0c684eb188d4348935068, type: 2}
+    - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
+        type: 3}
+      propertyPath: rooms.Array.data[6]
+      value: 
+      objectReference: {fileID: 135385565790625495, guid: 1098454cf9a414a4faf1c5470875ba31,
+        type: 3}
+    - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
+        type: 3}
+      propertyPath: rooms.Array.data[7]
+      value: 
+      objectReference: {fileID: 6973182517252170123, guid: 295a3cf18dd323b4693eb20008cbd4cf,
         type: 3}
     m_RemovedComponents:
     - {fileID: 3793579862671357024, guid: deacad4c1c3340a41b0eff79ceb0996b, type: 3}

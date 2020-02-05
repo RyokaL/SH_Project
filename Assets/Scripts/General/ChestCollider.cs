@@ -8,11 +8,7 @@ public class ChestCollider : MonoBehaviour {
     void OnTriggerEnter(Collider collision) {
         PlayerWeapon playerCollide = null;
         playerCollide = collision.gameObject.GetComponentInChildren<PlayerWeapon>();
-        if(collision.gameObject.tag.Equals("Player")) {
-            Debug.Log("Player");
-        }
         if(playerCollide != null) {
-            Debug.Log("Player");
             playerCollide.equipWeapon(weaponChoose.getWeapon());
             Destroy(gameObject);
         }
