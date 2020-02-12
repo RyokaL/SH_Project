@@ -475,7 +475,7 @@ PrefabInstance:
         type: 3}
       propertyPath: exitCover
       value: 
-      objectReference: {fileID: 2568190494184170474, guid: 7e67afd84e71b5e4ba76a35a15bf2d74,
+      objectReference: {fileID: 8325367144203665957, guid: 384bc3b0400ccf24ca3bf9817c5250cf,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bcadedbc949022408136aa76bb04546, type: 3}
@@ -712,7 +712,7 @@ PrefabInstance:
         type: 3}
       propertyPath: exitCover
       value: 
-      objectReference: {fileID: 2568190494184170474, guid: 7e67afd84e71b5e4ba76a35a15bf2d74,
+      objectReference: {fileID: 8325367144203665957, guid: 384bc3b0400ccf24ca3bf9817c5250cf,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bcadedbc949022408136aa76bb04546, type: 3}
@@ -1249,7 +1249,7 @@ PrefabInstance:
         type: 3}
       propertyPath: exitCover
       value: 
-      objectReference: {fileID: 2568190494184170474, guid: 7e67afd84e71b5e4ba76a35a15bf2d74,
+      objectReference: {fileID: 8325367144203665957, guid: 384bc3b0400ccf24ca3bf9817c5250cf,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bcadedbc949022408136aa76bb04546, type: 3}
@@ -1711,7 +1711,7 @@ PrefabInstance:
         type: 3}
       propertyPath: exitCover
       value: 
-      objectReference: {fileID: 2568190494184170474, guid: 7e67afd84e71b5e4ba76a35a15bf2d74,
+      objectReference: {fileID: 8325367144203665957, guid: 384bc3b0400ccf24ca3bf9817c5250cf,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bcadedbc949022408136aa76bb04546, type: 3}

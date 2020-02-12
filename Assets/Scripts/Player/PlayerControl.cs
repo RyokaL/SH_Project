@@ -70,6 +70,8 @@ public class PlayerControl : MonoBehaviour
 
     void FixedUpdate()
     {
+        transform.forward = playerCam.transform.forward;
+
         velocity.x = 0;
         velocity.z = 0;
         float preY = velocity.y;
@@ -100,7 +102,7 @@ public class PlayerControl : MonoBehaviour
 
         Vector3 face = new Vector3(velocity.x, 0, velocity.z);
         if(face != Vector3.zero && !shmupMode) {
-            transform.forward = face;
+            //transform.forward = face;
         }
         else {
             if(shmupMode && !shmupDir.Equals(Vector3.zero)) {

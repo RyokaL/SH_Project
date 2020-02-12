@@ -16,6 +16,12 @@ public class SpellAttr
     public float maxRange = 0;
     public float minDot = 0;
     public float maxDot = 0;
+
+    //0 - Normal bullet
+    //1 - Switch on/off
+    //2 - Charged bullet
+    //3 - Ray
+    public int spellType;
     public SpellAttr(float minDamage, float maxDamage, float minTTL, float maxTTL, float minFireRate, float maxFireRate, 
                     float minRange, float maxRange, float minDot, float maxDot) {
         

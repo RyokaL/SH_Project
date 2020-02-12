@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3018474529649934726}
   - component: {fileID: 3734812430265529955}
   - component: {fileID: 5526985566395560857}
+  - component: {fileID: -3088740037238892178}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Enemy
@@ -124,6 +125,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currHealth: 0
   healthBarImg: {fileID: 3648083542857422875}
+--- !u!54 &-3088740037238892178
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3472748399218168434}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &8599475111078435304
 PrefabInstance:
   m_ObjectHideFlags: 0

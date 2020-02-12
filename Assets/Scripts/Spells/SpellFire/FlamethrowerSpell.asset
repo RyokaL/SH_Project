@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f147d0c9876111e40b0a401125fddd6c, type: 3}
+  m_Name: FlamethrowerSpell
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 150282772090591873, guid: a2f90a4668a389b4ea40d4ce8d5d8908,
+    type: 3}
+  spellAttributes:
+    minDamage: 0.1
+    maxDamage: 0.5
+    minTTL: 5
+    maxTTL: 10
+    minFireRate: 3
+    maxFireRate: 20
+    minRange: 1
+    maxRange: 5
+    minDot: 0.1
+    maxDot: 0.5
+    spellType: 1

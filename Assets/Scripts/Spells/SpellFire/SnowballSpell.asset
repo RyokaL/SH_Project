@@ -19,7 +19,7 @@ MonoBehaviour:
     maxDamage: 10
     minTTL: 1
     maxTTL: 5
-    minFireRate: 0.1
+    minFireRate: 1
     maxFireRate: 3
     minRange: 0
     maxRange: 0

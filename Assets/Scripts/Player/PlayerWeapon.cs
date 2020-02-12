@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
 {
-    //TODO: Needs overhauling per bullet type - Instead call a "fire" function in the bullet?
     //Ice - constant velocity
     //Wind - initial thrust
     //Fire - No velocity - just particle effect
@@ -22,24 +21,73 @@ public class PlayerWeapon : MonoBehaviour
 
     bool fire = false;
 
-    private int cooldownFrames = 10;
-    private int currCooldown;
+    private float timeCount = 0;
+    private bool couldFire = false;
+    private float fireRateCooldown;
+    public float fireEnergy = 0;
+    public bool switched = false;
+    public float maxTTL = 0;
     // Start is called before the first frame update
     void Start()
     {
         pc = GetComponentInParent<PlayerControl>();
+        fireRateCooldown = 1 / equipped.modifiers.fireRate;
+        maxTTL = equipped.modifiers.TTL;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(currCooldown > 0) {
-            currCooldown -= 1;
-            return;
-        }
-        if(Input.GetButton("Fire1")) {
-            fire = true;
-            currCooldown = cooldownFrames;
+        timeCount += Time.deltaTime;
+        switch(equipped.spellPrefab.spellAttributes.spellType) {
+            case 0:
+                if(couldFire || timeCount >= fireRateCooldown) {
+                    if(Input.GetButton("Fire1")) {
+                        fire = true;
+                        if(couldFire) {
+                            timeCount = 0;
+                            couldFire = false;
+                        }
+                    }
+                    else if(!couldFire) {
+                        couldFire = true;
+                    }
+                    if(timeCount >= fireRateCooldown) {
+                        timeCount -= fireRateCooldown;
+                    }
+                }
+                break;
+            case 1:
+                if(switched) {
+                    fireEnergy -= Time.deltaTime;
+                    if(!Input.GetButton("Fire1")) {
+                        if(!fire) {
+                            switched = false;
+                            equipped.spellPrefab.fire(equipped.modifiers, transform, cam);  
+                        }
+                    }
+                    else if(fireEnergy <= 0) {
+                        switched = false;
+                        equipped.spellPrefab.fire(equipped.modifiers, transform, cam);  
+                    }
+                }
+                else {
+                    fireEnergy += Time.deltaTime;
+                    if(fireEnergy >= maxTTL) {
+                        fireEnergy = maxTTL;
+                    }
+                    if(Input.GetButton("Fire1")) {
+                        if(fireEnergy > 0) {
+                            fire = true;
+                            switched = true;
+                        }
+                    }
+                }
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
         }
     }
 
@@ -47,10 +95,7 @@ public class PlayerWeapon : MonoBehaviour
     {
         if(fire) {
             if(pc.isShmup()) {
-                GameObject temp = Instantiate(bullet, transform.position, transform.rotation) as GameObject;
-                Rigidbody projectile = temp.GetComponent<Rigidbody>();
-                projectile.velocity = transform.parent.forward * speed;
-                fire = false;
+                //Not implemented
             }
             else {
                 Spell equippedSpell = equipped.spellPrefab;
@@ -62,5 +107,7 @@ public class PlayerWeapon : MonoBehaviour
 
     public void equipWeapon(Weapon newWeapon) {
         equipped = newWeapon;
+        fireRateCooldown = 1 / equipped.modifiers.fireRate;
+        maxTTL = equipped.modifiers.TTL;
     }
 }

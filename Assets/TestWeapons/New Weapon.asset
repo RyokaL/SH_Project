@@ -16,16 +16,16 @@ MonoBehaviour:
   staff: {fileID: 0}
   cradle: {fileID: 0}
   gem: {fileID: 0}
-  spellPrefab: {fileID: 11400000, guid: 678a51379c5b7614091a813763975b1a, type: 2}
+  spellPrefab: {fileID: 11400000, guid: 0b363076448b7a04b9cc6d58f7c323da, type: 2}
   modifiers:
-    damage: 1
-    dot: 0
+    damage: 0.1
+    dot: 1
     dotTick: 1
     dotLength: 3
     pierce: 0
     bounce: 0
     track: 0
     numBullets: 1
-    fireRate: 1
+    fireRate: 3
     TTL: 10
     range: 0
