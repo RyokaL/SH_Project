@@ -10,8 +10,6 @@ public class PlayerWeapon : MonoBehaviour
     //Electric - same as ice
     //Light - Hitscan, use a trail
 
-    public GameObject bullet;
-
     [SerializeField]
     public Weapon equipped;
     public float speed;

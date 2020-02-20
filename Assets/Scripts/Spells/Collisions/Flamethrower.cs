@@ -5,7 +5,6 @@ using UnityEngine;
 public class Flamethrower : MonoBehaviour, ISpellCollision
 {
     private float timeCount = 0;
-    private float totalTimeOn = 0;
     private float damageCooldown = 0;
     private SpellMod modifiers;
     // Start is called before the first frame update

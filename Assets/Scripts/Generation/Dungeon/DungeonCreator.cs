@@ -12,6 +12,9 @@ public class DungeonCreator : MonoBehaviour
     public List<GameObject> spawnRooms;
     public int gridSpacing;
     public Material[] roomColours;
+
+    public Material[] refMats;
+    public Material[] copyMats;
     public int maxRooms;
     //Store grid position along with voxel object
     private Dictionary<Vector3, Transform> grid;
@@ -29,6 +32,10 @@ public class DungeonCreator : MonoBehaviour
 
         foreach(Material m in roomColours) {
              m.SetColor("_Color", Random.ColorHSV());
+        }
+
+        for(int i = 0; i < refMats.Length; i++) {
+            copyMats[i].color = refMats[i].color;
         }
     
         //Spawn initial room

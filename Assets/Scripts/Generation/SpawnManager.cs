@@ -54,7 +54,7 @@ public class SpawnManager : MonoBehaviour
         else
         {
             cooldownCount -= spawnCooldown;
-            if(enemiesSpawned < maxEnemies && spawnChance < (int)Random.Range(0, 100)) {
+            if(enemiesSpawned < maxEnemies && spawnChance >= (int)Random.Range(0, 100)) {
                 spawnedEnemies[enemiesSpawned] = Instantiate(enemiesToSpawn[(int)Random.Range(0, enemiesToSpawn.Length)], transform.position, transform.rotation);
                 enemiesSpawned += 1;
                 totalSpawned += 1;

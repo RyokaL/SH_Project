@@ -14,6 +14,6 @@ public class HealthBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //transformThis.LookAt(mainCam.transform);
+        transformThis.LookAt(mainCam.transform);
     }
 }

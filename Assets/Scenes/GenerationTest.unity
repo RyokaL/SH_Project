@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 7416536dbe0334cfd888dd1beb75a9fb, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 13f6e5eed33d84c76979f1ec06b5e48c, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -121,12 +121,46 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &586141827 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3793579862671357027, guid: deacad4c1c3340a41b0eff79ceb0996b,
+    type: 3}
+  m_PrefabInstance: {fileID: 3793579864011898338}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &586141830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 586141827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71557dbb3bb0f9b46bb1f1b16793e729, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  matRef: {fileID: 2100000, guid: 883f8208688f4014fb92cde6700c2f8f, type: 2}
+  matCopy: {fileID: 2100000, guid: d433550eb739d784a9b2d829abb68e4f, type: 2}
 --- !u!1 &673018299 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2662548091481575216, guid: bfb79b66530aec5459320fb84f83d5a2,
     type: 3}
   m_PrefabInstance: {fileID: 733672919}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &673018306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 673018299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8756f6f8d9d6b504792d0abef8f41c98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currHealth: 0
+  healthBarImg: {fileID: 0}
 --- !u!1 &684943717
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,7 +558,17 @@ PrefabInstance:
     - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
         type: 3}
       propertyPath: roomColours.Array.size
-      value: 5
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
+        type: 3}
+      propertyPath: refMats.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
+        type: 3}
+      propertyPath: copyMats.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
         type: 3}
@@ -644,6 +688,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8472231162392003416, guid: 212edc0efb3475443a6a009833d8f16c,
         type: 3}
+    - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
+        type: 3}
+      propertyPath: roomColours.Array.data[5]
+      value: 
+      objectReference: {fileID: 997908051603205566, guid: b125403272a202043b9aab2548eb7959,
+        type: 3}
+    - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
+        type: 3}
+      propertyPath: roomColours.Array.data[6]
+      value: 
+      objectReference: {fileID: 1267493735161929510, guid: b125403272a202043b9aab2548eb7959,
+        type: 3}
+    - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
+        type: 3}
+      propertyPath: copyMats.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d433550eb739d784a9b2d829abb68e4f, type: 2}
+    - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
+        type: 3}
+      propertyPath: refMats.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 883f8208688f4014fb92cde6700c2f8f, type: 2}
     m_RemovedComponents:
     - {fileID: 3793579862671357024, guid: deacad4c1c3340a41b0eff79ceb0996b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: deacad4c1c3340a41b0eff79ceb0996b, type: 3}

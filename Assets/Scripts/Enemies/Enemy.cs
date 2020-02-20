@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     public HealthControl health;
     public Transform rootTransform;
 
+    public AI ai;
+
     void Awake() {
 
     }
@@ -34,17 +36,6 @@ public class Enemy : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-
-        Collider[] playerInRange = Physics.OverlapSphere(rootTransform.position, stats.sightRange);
-        foreach(Collider c in playerInRange) {
-            if(c.gameObject.tag == "Player") {
-                if(Vector3.Angle(rootTransform.position, c.transform.position) < stats.sightAngle) {
-                    transform.root.LookAt(c.transform);
-                    //Enter chase mode? For now just keep moving if in range
-                    rootTransform.position += rootTransform.forward * Time.deltaTime * stats.speed;
-                    break;
-                } 
-            }
-        }
+        ai.nextUpdate(rootTransform.gameObject, stats);
     }
 }

@@ -10,6 +10,7 @@ public abstract class Spell : ScriptableObject
     [SerializeField]
     public SpellAttr spellAttributes;
     public abstract void fire(SpellMod modifiers, Transform firePoint, Camera mainCam);
+    public abstract void fire(SpellMod modifiers, Transform firePoint, Transform target);
 
     public abstract GameObject getProjectile();
     public abstract SpellAttr GetSpellAttr();

@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "Spells", menuName = "Spells/Fire")]
 public class Fire : Spell {
-
-    private float runningTime = 0;
-
     GameObject beam = null;
     bool switchedOn = false;
     public override void fire(SpellMod modifiers, Transform firePoint, Camera mainCam) {
@@ -29,6 +26,10 @@ public class Fire : Spell {
             return;
         }
         //Destroy(beam, modifiers.TTL);
+    }
+
+    public override void fire(SpellMod modifiers, Transform firePoint, Transform target) {
+        return;
     }
 
     public override GameObject getProjectile() {

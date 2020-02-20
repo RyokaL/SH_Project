@@ -1,26 +1,24 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-[CreateAssetMenu(fileName = "Spells", menuName = "Spells/Ice")]
-public class Ice : Spell
+[CreateAssetMenu(fileName = "Spells", menuName = "Spells/EnemyShadow")]
+public class EnemyNormal : Spell
 {
-    public string spellName;
 
-    public override void fire(SpellMod modifiers, Transform firePoint, Camera mainCam) {
+    public override void fire(SpellMod modifiers, Transform firePoint, Transform target) {
         GameObject temp = Instantiate(projectile) as GameObject;
-        temp.transform.position = mainCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, mainCam.nearClipPlane));
+        temp.transform.position = firePoint.position;
 
         ISpellCollision spellScript = temp.GetComponent<ISpellCollision>();
         spellScript.setModifiers(modifiers);
 
         Rigidbody projectRigid = temp.GetComponent<Rigidbody>();
-        projectRigid.velocity = mainCam.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2, 0)).direction * 20;
+        projectRigid.velocity = (target.position - firePoint.position).normalized * 5;
     }
 
-    public override void fire(SpellMod modifiers, Transform firePoint, Transform target) {
-        //Implement for tracking?
+    public override void fire(SpellMod modifiers, Transform firePoint, Camera mainCam) {
         return;
     }
 
