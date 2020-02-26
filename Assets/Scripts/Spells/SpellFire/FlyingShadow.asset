@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf13fb5588f861944ac4360e3ee033ab, type: 3}
+  m_Name: FlyingShadow
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 6073343543823644297, guid: 0d73a0b9a28fc9248ad27c9fb8e4dc8c,
+    type: 3}
+  spellAttributes:
+    minDamage: 0.5
+    maxDamage: 2
+    minTTL: 1
+    maxTTL: 5
+    minFireRate: 3
+    maxFireRate: 10
+    minRange: 0
+    maxRange: 0
+    minDot: 0
+    maxDot: 0
+    spellType: 0
