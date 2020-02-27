@@ -36,6 +36,9 @@ public class Enemy : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+    }
+
+    void FixedUpdate() {
         ai.nextUpdate(rootTransform.gameObject, stats);
     }
 }

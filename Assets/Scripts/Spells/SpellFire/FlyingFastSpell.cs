@@ -15,7 +15,7 @@ public class FlyingFastSpell : Spell
         spellScript.setModifiers(modifiers);
 
         Rigidbody projectRigid = temp.GetComponent<Rigidbody>();
-        projectRigid.velocity = (target.position - firePoint.position).normalized * 25;
+        projectRigid.velocity = (target.position - firePoint.position).normalized * 20;
     }
 
     public override void fire(SpellMod modifiers, Transform firePoint, Camera mainCam) {

@@ -6,7 +6,7 @@ public class FPCameraController : MonoBehaviour
 {
 
     private const float MIN_Y_ANGLE = -60.0f;
-    private const float MAX_Y_ANGLE = 60.0f;
+    private const float MAX_Y_ANGLE = 75.0f;
     [Tooltip("Object the camera will follow")]
     public GameObject follow;
     private float inpX;

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-[CreateAssetMenu(fileName = "Enemy AI", menuName = "Enemy AI/Flying")]
 public class FlyingAI : AI {
 
     private float cooldown = 0;
@@ -28,8 +27,15 @@ public class FlyingAI : AI {
                     //If the collider we hit is the player, we have a direct line
                     if(hit.collider.tag == "Player") {
                         avTransform.LookAt(c.transform);
-                        Vector3 dir = (c.transform.position - avTransform.position).normalized;
-                        avTransform.position = avTransform.position + (dir * stats.speed * Time.fixedDeltaTime);
+                        Vector3 dir = (c.transform.position - avTransform.position);
+
+                        if(avTransform.position.y <= c.transform.position.y + 5) {
+                            avTransform.position = new Vector3(avTransform.position.x, c.transform.position.y + 5, avTransform.position.z);
+                        }
+
+                        if(dir.magnitude > 10) {
+                            avTransform.position = avTransform.position + (dir.normalized * stats.speed * Time.fixedDeltaTime);
+                        }
                     }
 
                     if(attackCooldown >= ATK_COOL) {
@@ -50,6 +56,7 @@ public class FlyingAI : AI {
                     break;
                 } 
             }
+            //If no player in range, patrol
         }
     }
 }

@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-[CreateAssetMenu(fileName = "Enemy AI", menuName = "Enemy AI/Turret")]
 public class TurretAI : AI {
 
-    private float cooldown = 0;
+    public float cooldown = 0;
     
     public override void nextUpdate(GameObject avatar, EnemyStats stats) {
         Transform avTransform = avatar.transform;

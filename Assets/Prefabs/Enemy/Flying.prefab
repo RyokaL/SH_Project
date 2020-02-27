@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 366444144879799670}
   - component: {fileID: 6572378486143013540}
   - component: {fileID: 3206836109139847427}
+  - component: {fileID: 4659683491550930775}
   m_Layer: 10
   m_Name: Flying
   m_TagString: Enemy
@@ -144,7 +145,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 3805bbaa7aa5c094793e76cb2823a415, type: 2}
   health: {fileID: 6572378486143013540}
   rootTransform: {fileID: 2029037822071002651}
-  ai: {fileID: 11400000, guid: dc565c81674d908479a67805f5d9a12e, type: 2}
+  ai: {fileID: 4659683491550930775}
 --- !u!114 &6572378486143013540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +176,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4659683491550930775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3059016166321759240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e8893f1201965c49a6c239aa78132ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6938681474308901029
 GameObject:
   m_ObjectHideFlags: 0
