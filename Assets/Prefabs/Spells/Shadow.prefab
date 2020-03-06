@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4971914339406601354}
   - component: {fileID: 6618215034202806205}
   - component: {fileID: 1702540352972156066}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Shadow
   m_TagString: PlayerAttack
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   - component: {fileID: 4087229424165881890}
   - component: {fileID: 261928341237152772}
   - component: {fileID: 2142055668053108408}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Particle System
   m_TagString: Untagged
   m_Icon: {fileID: 0}

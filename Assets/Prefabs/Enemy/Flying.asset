@@ -28,4 +28,4 @@ MonoBehaviour:
     range: 0
   sightRange: 50
   sightAngle: 180
-  speed: 5
+  speed: 8
