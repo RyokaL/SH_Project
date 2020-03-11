@@ -58,7 +58,7 @@ public class FlyingSwarmLeaderAI : AI
             v3 = (r3 / (nBoids - 1) - boidRigid.velocity) / 8;
             Vector3 v4 = (leader.position - boidRigid.position) / 100;
 
-            boidRigid.velocity = boidRigid.velocity + (v1 + v2 + v3);
+            boidRigid.velocity = boidRigid.velocity + (v1 + v2 + v3 + v4);
             if(boidRigid.velocity.magnitude > stats.speed) {
                 boidRigid.velocity = boidRigid.velocity.normalized * stats.speed;
             }
