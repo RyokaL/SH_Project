@@ -5,4 +5,5 @@ using UnityEngine;
 [System.Serializable]
 public abstract class AI : MonoBehaviour {
     public abstract void nextUpdate(GameObject avatar, EnemyStats stats);
+    public abstract void onDeath(GameObject root);
 }

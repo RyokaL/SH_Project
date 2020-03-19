@@ -7,5 +7,9 @@ public class FlyingSwarmAI : AI
     public override void nextUpdate(GameObject avatar, EnemyStats stats) {
         //Listen to swarm leader until death
     }
+
+    public override void onDeath(GameObject root) {
+        Destroy(root);
+    }
         
 }

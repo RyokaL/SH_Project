@@ -1332,6 +1332,16 @@ PrefabInstance:
       propertyPath: boids.Array.data[11]
       value: 
       objectReference: {fileID: 533719159}
+    - target: {fileID: 7037705720052971767, guid: 87a4e3099c6b0614ba684039ba628591,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8752255535190974362, guid: 87a4e3099c6b0614ba684039ba628591,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87a4e3099c6b0614ba684039ba628591, type: 3}
 --- !u!114 &1290705159 stripped

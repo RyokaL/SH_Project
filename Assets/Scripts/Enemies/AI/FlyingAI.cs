@@ -73,4 +73,8 @@ public class FlyingAI : AI {
             //If no player in range, patrol
         }
     }
+
+    public override void onDeath(GameObject root) {
+        Destroy(root);
+    }
 }

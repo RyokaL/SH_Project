@@ -23,4 +23,8 @@ public class TurretAI : AI {
             }
         }
     }
+
+    public override void onDeath(GameObject root) {
+        Destroy(root);
+    }
 }

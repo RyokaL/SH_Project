@@ -30,10 +30,10 @@ public class Enemy : MonoBehaviour
     {
         if(health.getHealth() <= 0) {
             if(rootTransform != null) {
-                Destroy(rootTransform.gameObject);
+                ai.onDeath(rootTransform.gameObject);
             }
             else {
-                Destroy(gameObject);
+                ai.onDeath(gameObject);
             }
         }
     }
