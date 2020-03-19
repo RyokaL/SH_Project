@@ -5,20 +5,30 @@ using UnityEngine;
 public class FlyingSwarmLeaderAI : AI
 {
     public List<FlyingSwarmAI> boids;
-    private int nBoids;
-    private Vector3 sumOfAllBoids;
+    private int nBoids = 0;
+    private Vector3 sumOfAllBoids = Vector3.zero;
 
     private bool charge = false;
-    private float chargeCooldown;
+    private float chargeCooldown = 0;
     private float CHARGE_COOL = 10;
 
     private bool stuck = false;
 
     private Vector3 lastChargeVelocity = Vector3.zero;
 
+    private EnemyStats stats = null;
+
+    private bool panic = false;
+    private GameObject rootObj;
+
     public override void nextUpdate(GameObject avatar, EnemyStats stats) {
+        this.stats = stats;
         boids.RemoveAll(f => f == null);
         nBoids = boids.Count;
+        if(nBoids == 0 && panic) {
+            Destroy(rootObj);
+            return;
+        }
         sumOfAllBoids = Vector3.zero;
 
         foreach(FlyingSwarmAI b in boids) {
@@ -28,7 +38,7 @@ public class FlyingSwarmLeaderAI : AI
 
         Rigidbody leader = avatar.GetComponent<Rigidbody>();
 
-        if(!stuck) {
+        if(!stuck && !panic) {
             Vector3 r1 = Vector3.zero;
             Collider[] playerInRange = Physics.OverlapSphere(avatar.transform.position, stats.sightRange);
             foreach(Collider c in playerInRange) {
@@ -84,6 +94,10 @@ public class FlyingSwarmLeaderAI : AI
             Rigidbody thisRigid = GetComponent<Rigidbody>();
             if(other.gameObject.tag.Equals("Player")) {
                 thisRigid.velocity = new Vector3(-lastChargeVelocity.x / 4, -lastChargeVelocity.y / 8, -lastChargeVelocity.z / 4);
+                HealthControl collided = other.GetComponent<HealthControl>();
+                if(collided) {
+                    collided.takeDamage(stats.modifiers.damage);
+                }
             }
             else {
                 //Stuck in object
@@ -91,7 +105,6 @@ public class FlyingSwarmLeaderAI : AI
                 stuck = true;
             }
         }
-        //Apply damage and cooldown;
     }
 
     void calculateBoids(GameObject avatar, EnemyStats stats) {
@@ -99,6 +112,12 @@ public class FlyingSwarmLeaderAI : AI
 
         Vector3 v1, v2, v3;
 
+        float disperseMult = 1;
+        float followMult = 1;
+        if(panic) {
+            disperseMult = -1;
+            followMult = 0;
+        }
         foreach(FlyingSwarmAI b in boids) {
             Rigidbody boidRigid = b.GetComponent<Rigidbody>();
             GameObject boid = b.gameObject;
@@ -127,6 +146,9 @@ public class FlyingSwarmLeaderAI : AI
                 if(c.GetComponent<FlyingSwarmAI>()) {
                     continue;
                 }
+                if(panic && c.gameObject.tag.Equals("PlayerAttack")) {
+                    continue;
+                }
                 GameObject otherB = c.gameObject;
                 r2 = r2 - (otherB.transform.position - b.transform.position);
             }
@@ -135,7 +157,7 @@ public class FlyingSwarmLeaderAI : AI
             v3 = (r3 / (nBoids - 1) - boidRigid.velocity) / 8;
             Vector3 v4 = (leader.position - boidRigid.position) / 100;
 
-            boidRigid.velocity = boidRigid.velocity + (v1 + v2 + v3 + v4);
+            boidRigid.velocity = boidRigid.velocity + ((disperseMult * v1) + v2 + v3 + (followMult * v4));
             if(boidRigid.velocity.magnitude > stats.speed) {
                 boidRigid.velocity = boidRigid.velocity.normalized * stats.speed;
             }
@@ -144,7 +166,28 @@ public class FlyingSwarmLeaderAI : AI
     }
 
     public override void onDeath(GameObject root) {
+        if(panic) {
+            return;
+        }
         //Chance to assign new leader or turn swarm into panic mode
-        Destroy(root);
+        if(Random.Range(0, 100) <= 20) {
+            FlyingSwarmAI newLeader = boids.Find(b => b != null);
+            boids.Remove(newLeader);
+            newLeader.makeLeader(boids, stats);
+            Destroy(root);
+        }
+        else {
+            panic = true;
+            rootObj = root;
+            GetComponent<MeshCollider>().enabled = false;
+            Renderer[] hides = GetComponentsInChildren<Renderer>();
+            foreach(Renderer h in hides) {
+                h.enabled = false;
+            }
+        }
+    }
+
+    public void setBoids(List<FlyingSwarmAI> boids) {
+        this.boids = boids;
     }
 }

@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 1546317000955056953}
   - component: {fileID: 7115863352462977182}
   - component: {fileID: 7726213050087700739}
+  - component: {fileID: 988598322220883767}
   m_Layer: 10
   m_Name: FlyingSwarm
   m_TagString: Enemy
@@ -266,6 +267,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28224938b64f2ff42a45fae910ddd475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  colourChange: {fileID: 2100000, guid: 98c13488ec9e5fe468ad1e51231f018b, type: 2}
+  matChange: {fileID: 3317884630760130872}
+--- !u!114 &988598322220883767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7220280143030429077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aa40482e4c7ea9428fbd83114b7a49d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boids: []
 --- !u!1001 &7758050440244913899
 PrefabInstance:
   m_ObjectHideFlags: 0
