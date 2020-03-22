@@ -894,6 +894,11 @@ PrefabInstance:
       propertyPath: playerCam
       value: 
       objectReference: {fileID: 684943720}
+    - target: {fileID: 2662548091481575226, guid: bfb79b66530aec5459320fb84f83d5a2,
+        type: 3}
+      propertyPath: moveSpeed
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 2662548091367161556, guid: bfb79b66530aec5459320fb84f83d5a2,
         type: 3}
       propertyPath: cam
@@ -1994,6 +1999,12 @@ PrefabInstance:
       propertyPath: refMats.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 883f8208688f4014fb92cde6700c2f8f, type: 2}
+    - target: {fileID: 5634633927997812204, guid: deacad4c1c3340a41b0eff79ceb0996b,
+        type: 3}
+      propertyPath: boundCheck
+      value: 
+      objectReference: {fileID: 4745287577989388338, guid: 63be70ba5fea32f408083ccb82014067,
+        type: 3}
     m_RemovedComponents:
     - {fileID: 3793579862671357024, guid: deacad4c1c3340a41b0eff79ceb0996b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: deacad4c1c3340a41b0eff79ceb0996b, type: 3}

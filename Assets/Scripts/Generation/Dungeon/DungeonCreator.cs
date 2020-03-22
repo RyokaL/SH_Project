@@ -21,6 +21,10 @@ public class DungeonCreator : MonoBehaviour
     private List<Room> roomsToProcess;
     private List<GameObject> actualRooms;
 
+    public GameObject boundCheck;
+
+    private float boundOffset = 200;
+
     private int roomsSpawned = 0;
     // Start is called before the first frame update
     void Start()
@@ -178,6 +182,70 @@ public class DungeonCreator : MonoBehaviour
         }
         tidyUpEditor();
         closeDoors();
+        generateLevelBounds();
+    }
+
+    private void generateLevelBounds() {
+        Vector3 smallestVoxel = Vector3.positiveInfinity;
+        Vector3 largestVoxel = Vector3.negativeInfinity;
+
+        foreach(Transform t in grid.Values) {
+            Vector3 pos = t.position;
+            if(pos.x <= smallestVoxel.x) {
+                smallestVoxel.x = pos.x;
+            }
+            if(pos.y <= smallestVoxel.y) {
+                smallestVoxel.y = pos.y;
+            }
+            if(pos.z <= smallestVoxel.z) {
+                smallestVoxel.z = pos.z;
+            }
+
+            if(pos.x >= largestVoxel.x) {
+                largestVoxel.x = pos.x;
+            }
+            if(pos.y >= largestVoxel.y) {
+                largestVoxel.y = pos.y;
+            }
+            if(pos.z >= largestVoxel.z) {
+                largestVoxel.z = pos.z;
+            }
+        }
+
+        smallestVoxel.x -= gridSpacing / 2;
+        smallestVoxel.y -= gridSpacing / 2;
+        smallestVoxel.z -= gridSpacing / 2;
+
+        largestVoxel.x += gridSpacing / 2;
+        largestVoxel.y += gridSpacing / 2;
+        largestVoxel.z += gridSpacing / 2;
+
+        Vector3 distance = largestVoxel - smallestVoxel;
+
+        float xPos = smallestVoxel.x + (distance.x / 2);
+        float yPosS = smallestVoxel.y - boundOffset / 2;
+        float yPosL = largestVoxel.y + boundOffset;
+
+        distance.y += 1.5f * boundOffset;
+
+        //Create cube of bounds. Possibly more efficient that one single cube with constant collisions?
+        GameObject floor = Instantiate(boundCheck, new Vector3(xPos, yPosS, smallestVoxel.z + distance.z / 2), boundCheck.transform.rotation) as GameObject;
+        floor.transform.localScale = new Vector3(distance.x + boundOffset, 1, distance.z + boundOffset);
+
+        GameObject roof = Instantiate(boundCheck, new Vector3(xPos, yPosL, smallestVoxel.z + distance.z / 2), boundCheck.transform.rotation) as GameObject;
+        roof.transform.localScale = new Vector3(distance.x + boundOffset, 1, distance.z + boundOffset);
+
+        GameObject backWall = Instantiate(boundCheck, new Vector3(smallestVoxel.x - (boundOffset / 2), smallestVoxel.y + (distance.y / 4), smallestVoxel.z + distance.z / 2), boundCheck.transform.rotation) as GameObject;
+        backWall.transform.localScale = new Vector3(1, distance.y, distance.z + boundOffset);
+
+        GameObject frontWall = Instantiate(boundCheck, new Vector3(largestVoxel.x + (boundOffset / 2), smallestVoxel.y + (distance.y / 4), smallestVoxel.z + distance.z / 2), boundCheck.transform.rotation) as GameObject;
+        frontWall.transform.localScale = new Vector3(1, distance.y, distance.z + boundOffset);
+
+        GameObject leftWall = Instantiate(boundCheck, new Vector3(xPos, smallestVoxel.y + (distance.y / 4), smallestVoxel.z - boundOffset / 2), boundCheck.transform.rotation) as GameObject;
+        leftWall.transform.localScale = new Vector3(distance.x + boundOffset, distance.y, 1);
+
+        GameObject rightWall = Instantiate(boundCheck, new Vector3(xPos, smallestVoxel.y + (distance.y / 4), largestVoxel.z + boundOffset / 2), boundCheck.transform.rotation) as GameObject;
+        rightWall.transform.localScale = new Vector3(distance.x + boundOffset, distance.y, 1);
     }
 
     private void closeDoors() {

@@ -24,6 +24,10 @@ public class PlayerControl : MonoBehaviour
     private bool jump = false;
     private bool sprint = false;
 
+    public int dashCharges = 2;
+    private float dashCool = 0;
+    private float DASH_COOLDOWN = 1;
+    private bool dashing = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,13 +59,44 @@ public class PlayerControl : MonoBehaviour
             jump = true;
         }
         if(Input.GetButtonDown("Sprint")) {
-            if(!sprint) {
-                moveSpeed *= 2;
-                sprint = true;
+            // if(!sprint) {
+            //     moveSpeed *= 2;
+            //     sprint = true;
+            // }
+            // else {
+            //     sprint = false;
+            //     moveSpeed /= 2;
+            // }
+            if(dashCharges > 0) {
+                Vector3 movDir;
+                if(_controller.velocity.magnitude > 0) {
+                    movDir = _controller.velocity.normalized;
+                }
+                else {
+                    movDir = playerCam.forward.normalized;
+                }
+                movDir.y = 0;
+                _controller.Move(movDir * 5);
+                dashCharges -= 1;
+                dashing = true;
             }
-            else {
-                sprint = false;
-                moveSpeed /= 2;
+        }
+
+        if(_controller.isGrounded) {
+            dashing = false;
+        }
+
+        if(dashCharges < 2 && !dashing) {
+            dashCool += Time.deltaTime;
+            if(dashCharges == 0) {
+                if(dashCool >= DASH_COOLDOWN * 2) {
+                    dashCool -= DASH_COOLDOWN * 2;
+                    dashCharges += 2;
+                }
+            }
+            else if(dashCool >= DASH_COOLDOWN) {
+                dashCool -= DASH_COOLDOWN;
+                dashCharges += 1;
             }
         }
         shmupDir.x = Input.GetAxis("Mouse X_");

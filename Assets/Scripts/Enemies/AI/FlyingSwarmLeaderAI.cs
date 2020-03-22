@@ -44,17 +44,22 @@ public class FlyingSwarmLeaderAI : AI
             foreach(Collider c in playerInRange) {
                 if(c.gameObject.tag == "Player") {
                     if(Vector3.Angle(avatar.transform.position, c.transform.position) < stats.sightAngle) {
-                        if(chargeCooldown > CHARGE_COOL && Mathf.Abs((c.transform.position - leader.position).magnitude) < 20) {
-                            if(!charge) {
-                                leader.velocity = (c.transform.position - leader.position) * 2;
-                                lastChargeVelocity = leader.velocity;
-                                charge = true;
+                        RaycastHit hit;
+                        LayerMask mask = ~(1 << 10);
+                        Physics.Raycast(leader.position, (c.transform.position - leader.position), out hit, stats.sightRange, mask);
+                        if(hit.collider.tag == "Player") {
+                            if(chargeCooldown > CHARGE_COOL && Mathf.Abs((c.transform.position - leader.position).magnitude) < 20) {
+                                if(!charge) {
+                                    leader.velocity = (c.transform.position - leader.position) * 2;
+                                    lastChargeVelocity = leader.velocity;
+                                    charge = true;
+                                }
+                                chargeCooldown -= CHARGE_COOL;
                             }
-                            chargeCooldown -= CHARGE_COOL;
-                        }
-                        else {
-                            chargeCooldown += Time.deltaTime;
-                            r1 = (c.transform.position - leader.position) / 100;
+                            else {
+                                chargeCooldown += Time.deltaTime;
+                                r1 = (c.transform.position - leader.position) / 100;
+                            }
                         }
                     }
                 }
@@ -156,7 +161,9 @@ public class FlyingSwarmLeaderAI : AI
             v2 = r2;
             v3 = (r3 / (nBoids - 1) - boidRigid.velocity) / 8;
             Vector3 v4 = (leader.position - boidRigid.position) / 100;
-
+            if(!boid) {
+                continue;
+            }
             boidRigid.velocity = boidRigid.velocity + ((disperseMult * v1) + v2 + v3 + (followMult * v4));
             if(boidRigid.velocity.magnitude > stats.speed) {
                 boidRigid.velocity = boidRigid.velocity.normalized * stats.speed;
