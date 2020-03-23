@@ -26,6 +26,10 @@ public class PlayerWeapon : MonoBehaviour
     public bool switched = false;
     public float maxTTL = 0;
 
+    private bool chargeHeld = false;
+    public float chargeTime = 0;
+
+    public RectTransform weaponEnergyUI;
     public RectTransform weaponChargeUI;
     // Start is called before the first frame update
     void Start()
@@ -40,6 +44,7 @@ public class PlayerWeapon : MonoBehaviour
     {
         timeCount += Time.deltaTime;
         switch(equipped.spellPrefab.spellAttributes.spellType) {
+            //Normal Weapon with cooldown
             case 0:
                 if(couldFire || timeCount >= fireRateCooldown) {
                     if(Input.GetButton("Fire1")) {
@@ -57,6 +62,7 @@ public class PlayerWeapon : MonoBehaviour
                     }
                 }
                 break;
+            //Weapon with 'ammo'
             case 1:
                 if(switched) {
                     fireEnergy -= Time.deltaTime;
@@ -84,13 +90,37 @@ public class PlayerWeapon : MonoBehaviour
                     }
                 }
                 break;
+            //Charged Weapon
             case 2:
+                float fireTime = 1 / equipped.modifiers.fireRate;
+                if(Input.GetButton("Fire1")) {
+                    chargeHeld = true;
+                    chargeTime += Time.deltaTime;
+                    if(chargeTime > fireTime) {
+                        chargeTime = fireTime;
+                    }
+                }
+                else if(chargeHeld) {
+                    chargeHeld = false;
+                    equipped.modifiers.damagePercent = (chargeTime / fireTime);
+                    if(chargeTime / fireTime == 1) {
+                        equipped.modifiers.pierce = true;
+                    }
+                    else {
+                        equipped.modifiers.pierce = false;
+                    }
+                    fire = true;
+                    chargeTime = 0;
+                }
                 break;
             case 3:
                 break;
         }
+        if(weaponEnergyUI != null) {
+            weaponEnergyUI.sizeDelta = new Vector2((fireEnergy / maxTTL) * 100, weaponEnergyUI.sizeDelta.y);
+        }
         if(weaponChargeUI != null) {
-            weaponChargeUI.sizeDelta = new Vector2((fireEnergy / maxTTL) * 100, weaponChargeUI.sizeDelta.y);
+            weaponChargeUI.sizeDelta = new Vector2((chargeTime / (1 / equipped.modifiers.fireRate)) * 100, weaponChargeUI.sizeDelta.y);
         }
     }
 

@@ -16,8 +16,11 @@ public class Snowball : MonoBehaviour, ISpellCollision
         enemyCollision(other.gameObject);
 
         if(modifiers.pierce) {
-            if(!other.gameObject.tag.Equals("Enemy")) {
-                Destroy(gameObject);
+            if(other.gameObject.tag.Equals("Enemy") || (other.gameObject.layer == 11)) {
+                //Do nothing
+            }
+            else {
+                 Destroy(gameObject);
             }
         }
         else {
@@ -40,7 +43,7 @@ public class Snowball : MonoBehaviour, ISpellCollision
     void enemyCollision(GameObject collidedObject) {
         if(collidedObject.tag.Equals("Enemy")) {
             HealthControl collidedHealth = collidedObject.GetComponent<HealthControl>();
-            collidedHealth.takeDamage(modifiers.damage);
+            collidedHealth.takeDamage(modifiers.damage * modifiers.damagePercent);
 
             if(modifiers.dot) {
                 collidedHealth.applyDot(modifiers.dotTick, modifiers.dotLength);

@@ -12,6 +12,8 @@ public class SpellMod
     public bool pierce = false;
     public bool bounce = false;
 
+    public float damagePercent = 1;
+
     public bool track = false;
     public int numBullets = 1;
     public float fireRate = 1;
