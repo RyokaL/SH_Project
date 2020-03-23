@@ -235,16 +235,16 @@ public class DungeonCreator : MonoBehaviour
         GameObject roof = Instantiate(boundCheck, new Vector3(xPos, yPosL, smallestVoxel.z + distance.z / 2), boundCheck.transform.rotation) as GameObject;
         roof.transform.localScale = new Vector3(distance.x + boundOffset, 1, distance.z + boundOffset);
 
-        GameObject backWall = Instantiate(boundCheck, new Vector3(smallestVoxel.x - (boundOffset / 2), smallestVoxel.y + (distance.y / 4), smallestVoxel.z + distance.z / 2), boundCheck.transform.rotation) as GameObject;
+        GameObject backWall = Instantiate(boundCheck, new Vector3(smallestVoxel.x - (boundOffset / 2), smallestVoxel.y + (distance.y / 4.25f), smallestVoxel.z + distance.z / 2), boundCheck.transform.rotation) as GameObject;
         backWall.transform.localScale = new Vector3(1, distance.y, distance.z + boundOffset);
 
-        GameObject frontWall = Instantiate(boundCheck, new Vector3(largestVoxel.x + (boundOffset / 2), smallestVoxel.y + (distance.y / 4), smallestVoxel.z + distance.z / 2), boundCheck.transform.rotation) as GameObject;
+        GameObject frontWall = Instantiate(boundCheck, new Vector3(largestVoxel.x + (boundOffset / 2), smallestVoxel.y + (distance.y / 4.25f), smallestVoxel.z + distance.z / 2), boundCheck.transform.rotation) as GameObject;
         frontWall.transform.localScale = new Vector3(1, distance.y, distance.z + boundOffset);
 
-        GameObject leftWall = Instantiate(boundCheck, new Vector3(xPos, smallestVoxel.y + (distance.y / 4), smallestVoxel.z - boundOffset / 2), boundCheck.transform.rotation) as GameObject;
+        GameObject leftWall = Instantiate(boundCheck, new Vector3(xPos, smallestVoxel.y + (distance.y / 4.25f), smallestVoxel.z - boundOffset / 2), boundCheck.transform.rotation) as GameObject;
         leftWall.transform.localScale = new Vector3(distance.x + boundOffset, distance.y, 1);
 
-        GameObject rightWall = Instantiate(boundCheck, new Vector3(xPos, smallestVoxel.y + (distance.y / 4), largestVoxel.z + boundOffset / 2), boundCheck.transform.rotation) as GameObject;
+        GameObject rightWall = Instantiate(boundCheck, new Vector3(xPos, smallestVoxel.y + (distance.y / 4.25f), largestVoxel.z + boundOffset / 2), boundCheck.transform.rotation) as GameObject;
         rightWall.transform.localScale = new Vector3(distance.x + boundOffset, distance.y, 1);
     }
 

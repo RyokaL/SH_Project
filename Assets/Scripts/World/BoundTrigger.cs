@@ -22,7 +22,10 @@ public class BoundTrigger : MonoBehaviour
             other.gameObject.GetComponent<CharacterController>().enabled = true;
         }
         else {
-            Destroy(other.gameObject);
+            AI checkAI = other.gameObject.GetComponent<AI>();
+            if(checkAI && checkAI.enabled) {
+                checkAI.onDeath(other.GetComponent<Enemy>().rootTransform.gameObject);
+            } 
         }
     }
 

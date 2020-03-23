@@ -26,6 +26,6 @@ MonoBehaviour:
     bounce: 0
     track: 0
     numBullets: 1
-    fireRate: 3
+    fireRate: 5
     TTL: 10
     range: 0

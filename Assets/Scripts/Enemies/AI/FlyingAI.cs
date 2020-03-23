@@ -22,35 +22,37 @@ public class FlyingAI : AI {
                     RaycastHit hit;
                     //We want to ignore other enemy colliders
                     LayerMask mask = ~(1 << 10);
-                    Physics.Raycast(avTransform.position, (c.transform.position - avTransform.position), out hit, stats.sightRange, mask);
-                    Debug.DrawRay(avTransform.position, (c.transform.position - avTransform.position));
-                    //If the collider we hit is the player, we have a direct line
-                    if(hit.collider.tag == "Player") {
-                        Rigidbody rigid = gameObject.GetComponent<Rigidbody>();
-                        //rigid.MoveRotation(Quaternion.LookRotation(c.transform.position, c.transform.position));
-                        avTransform.LookAt(c.transform);
-                        Vector3 dir = (c.transform.position - avTransform.position);
+                    if(Physics.Raycast(avTransform.position, (c.transform.position - avTransform.position), out hit, stats.sightRange, mask)) {
+                        Debug.DrawRay(avTransform.position, (c.transform.position - avTransform.position));
+                        //If the collider we hit is the player, we have a direct line
+                        if(hit.collider.tag == "Player") {
+                            Rigidbody rigid = gameObject.GetComponent<Rigidbody>();
+                            //rigid.MoveRotation(Quaternion.LookRotation(c.transform.position, c.transform.position));
+                            avTransform.LookAt(c.transform);
+                            Vector3 dir = (c.transform.position - avTransform.position);
 
-                        if(avTransform.position.y <= c.transform.position.y + 5) {
-                            rigid.velocity = new Vector3(rigid.velocity.x, 5 * stats.speed * Time.fixedDeltaTime, rigid.velocity.z);
-                            //avTransform.position = new Vector3(avTransform.position.x, c.transform.position.y + 5, avTransform.position.z);
-                        }
-                        else {
-                            rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
-                        }
-
-                        if(dir.magnitude > 10) {
-                            rigid.velocity = (dir.normalized * stats.speed * Time.fixedDeltaTime) * 10;
-                            arrived = false;
-                            //avTransform.position = avTransform.position + (dir.normalized * stats.speed * Time.fixedDeltaTime);
-                        }
-                        else {
-                            if(!arrived) {
-                                arrived = true;
+                            if(avTransform.position.y <= c.transform.position.y + 5) {
+                                rigid.velocity = new Vector3(rigid.velocity.x, 5 * stats.speed * Time.fixedDeltaTime, rigid.velocity.z);
+                                //avTransform.position = new Vector3(avTransform.position.x, c.transform.position.y + 5, avTransform.position.z);
                             }
-                            rigid.velocity = new Vector3(0, rigid.velocity.y, 0);
+                            else {
+                                rigid.velocity = new Vector3(rigid.velocity.x, 0, rigid.velocity.z);
+                            }
+
+                            if(dir.magnitude > 10) {
+                                rigid.velocity = (dir.normalized * stats.speed * Time.fixedDeltaTime) * 10;
+                                arrived = false;
+                                //avTransform.position = avTransform.position + (dir.normalized * stats.speed * Time.fixedDeltaTime);
+                            }
+                            else {
+                                if(!arrived) {
+                                    arrived = true;
+                                }
+                                rigid.velocity = new Vector3(0, rigid.velocity.y, 0);
+                            }
                         }
                     }
+                    
 
                     if(attackCooldown >= ATK_COOL) {
                         cooldown += Time.deltaTime;

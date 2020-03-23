@@ -25,6 +25,8 @@ public class PlayerWeapon : MonoBehaviour
     public float fireEnergy = 0;
     public bool switched = false;
     public float maxTTL = 0;
+
+    public RectTransform weaponChargeUI;
     // Start is called before the first frame update
     void Start()
     {
@@ -86,6 +88,9 @@ public class PlayerWeapon : MonoBehaviour
                 break;
             case 3:
                 break;
+        }
+        if(weaponChargeUI != null) {
+            weaponChargeUI.sizeDelta = new Vector2((fireEnergy / maxTTL) * 100, weaponChargeUI.sizeDelta.y);
         }
     }
 

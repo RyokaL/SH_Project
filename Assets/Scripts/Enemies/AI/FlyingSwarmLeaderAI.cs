@@ -46,19 +46,20 @@ public class FlyingSwarmLeaderAI : AI
                     if(Vector3.Angle(avatar.transform.position, c.transform.position) < stats.sightAngle) {
                         RaycastHit hit;
                         LayerMask mask = ~(1 << 10);
-                        Physics.Raycast(leader.position, (c.transform.position - leader.position), out hit, stats.sightRange, mask);
-                        if(hit.collider.tag == "Player") {
-                            if(chargeCooldown > CHARGE_COOL && Mathf.Abs((c.transform.position - leader.position).magnitude) < 20) {
-                                if(!charge) {
-                                    leader.velocity = (c.transform.position - leader.position) * 2;
-                                    lastChargeVelocity = leader.velocity;
-                                    charge = true;
+                        if(Physics.Raycast(leader.position, (c.transform.position - leader.position), out hit, stats.sightRange, mask)) {
+                            if(hit.collider.tag == "Player") {
+                                if(chargeCooldown > CHARGE_COOL && Mathf.Abs((c.transform.position - leader.position).magnitude) < 20) {
+                                    if(!charge) {
+                                        leader.velocity = (c.transform.position - leader.position) * 2;
+                                        lastChargeVelocity = leader.velocity;
+                                        charge = true;
+                                    }
+                                    chargeCooldown -= CHARGE_COOL;
                                 }
-                                chargeCooldown -= CHARGE_COOL;
-                            }
-                            else {
-                                chargeCooldown += Time.deltaTime;
-                                r1 = (c.transform.position - leader.position) / 100;
+                                else {
+                                    chargeCooldown += Time.deltaTime;
+                                    r1 = (c.transform.position - leader.position) / 100;
+                                }   
                             }
                         }
                     }
@@ -129,14 +130,19 @@ public class FlyingSwarmLeaderAI : AI
 
             //Rule 1: Boids always move towards the centre of mass of the other boids
             Vector3 centerOfOtherBoids = (sumOfAllBoids - boidRigid.position) / (nBoids - 1);
-            v1 = (centerOfOtherBoids - b.transform.position) / 100;
+            if(nBoids == 1) {
+                v1 =Vector3.zero;
+            }
+            else {
+                 v1 = (centerOfOtherBoids - b.transform.position) / 100;
+            }
             
             Vector3 r2 = Vector3.zero;
             Vector3 r3 = Vector3.zero;
             foreach(FlyingSwarmAI d in boids) {
                 GameObject otherB = d.gameObject;
                 Rigidbody otherBR = otherB.GetComponent<Rigidbody>();
-                if(otherB != b) {
+                if(otherB && otherB != b) {
                     //Rule 2: Boids keep away from other boids and objects
                     if((otherBR.position - boidRigid.position).magnitude < 10) {
                         r2 = r2 - (otherBR.position - boidRigid.position);
@@ -148,7 +154,7 @@ public class FlyingSwarmLeaderAI : AI
 
             Collider[] otherObjects = Physics.OverlapSphere(b.transform.position, 5);
             foreach(Collider c in otherObjects) {
-                if(c.GetComponent<FlyingSwarmAI>()) {
+                if(c.GetComponent<FlyingSwarmAI>() || c.gameObject.tag == "Respawn") {
                     continue;
                 }
                 if(panic && c.gameObject.tag.Equals("PlayerAttack")) {
@@ -159,12 +165,25 @@ public class FlyingSwarmLeaderAI : AI
             }
 
             v2 = r2;
-            v3 = (r3 / (nBoids - 1) - boidRigid.velocity) / 8;
-            Vector3 v4 = (leader.position - boidRigid.position) / 100;
+            if(nBoids == 1) {
+                v3 = Vector3.zero;
+            }
+            else {
+                v3 = (r3 / (nBoids - 1) - boidRigid.velocity) / 8;
+            }
+
+            Vector3 v4;
+            if(followMult != 0) {
+                v4 = (leader.position - boidRigid.position) / 100;
+            }
+            else {
+                v4 = Vector3.zero;
+            }
+
             if(!boid) {
                 continue;
             }
-            boidRigid.velocity = boidRigid.velocity + ((disperseMult * v1) + v2 + v3 + (followMult * v4));
+            boidRigid.velocity = boidRigid.velocity + ((disperseMult * v1) + v2 + (disperseMult * v3) + (followMult * v4));
             if(boidRigid.velocity.magnitude > stats.speed) {
                 boidRigid.velocity = boidRigid.velocity.normalized * stats.speed;
             }

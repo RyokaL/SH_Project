@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerControl : MonoBehaviour
 {
@@ -28,6 +29,9 @@ public class PlayerControl : MonoBehaviour
     private float dashCool = 0;
     private float DASH_COOLDOWN = 1;
     private bool dashing = false;
+
+    public RectTransform dashChargeUI1;
+    public RectTransform dashChargeUI2;
     // Start is called before the first frame update
     void Start()
     {
@@ -68,6 +72,15 @@ public class PlayerControl : MonoBehaviour
             //     moveSpeed /= 2;
             // }
             if(dashCharges > 0) {
+                if(dashCharges == 2) {
+                    dashChargeUI2.sizeDelta = new Vector2(0, dashChargeUI2.sizeDelta.y);
+                    dashChargeUI2.GetComponent<Image>().color = new Color32(0, 76, 86, 255);
+                }
+                else if(dashCharges == 1) {
+                    dashChargeUI1.sizeDelta = new Vector2(0, dashChargeUI1.sizeDelta.y);
+                    dashChargeUI1.GetComponent<Image>().color = new Color32(0, 76, 86, 255);
+                }
+
                 Vector3 movDir;
                 if(_controller.velocity.magnitude > 0) {
                     movDir = _controller.velocity.normalized;
@@ -89,14 +102,31 @@ public class PlayerControl : MonoBehaviour
         if(dashCharges < 2 && !dashing) {
             dashCool += Time.deltaTime;
             if(dashCharges == 0) {
+
+                if(dashCool < DASH_COOLDOWN) {
+                    dashChargeUI1.sizeDelta = new Vector2((dashCool / DASH_COOLDOWN) * 45, dashChargeUI1.sizeDelta.y);
+                    dashChargeUI2.sizeDelta = new Vector2(0, dashChargeUI2.sizeDelta.y);
+                }
+                else {
+                    dashChargeUI1.sizeDelta = new Vector2(45, dashChargeUI1.sizeDelta.y);
+                    dashChargeUI2.sizeDelta = new Vector2((dashCool - DASH_COOLDOWN / (DASH_COOLDOWN)) * (45), dashChargeUI2.sizeDelta.y);
+                }
+
                 if(dashCool >= DASH_COOLDOWN * 2) {
+                    dashChargeUI2.sizeDelta = new Vector2(45, dashChargeUI2.sizeDelta.y);
+                    dashChargeUI2.GetComponent<Image>().color = new Color32(0, 229, 255, 255);
+                    dashChargeUI1.GetComponent<Image>().color = new Color32(0, 229, 255, 255);
                     dashCool -= DASH_COOLDOWN * 2;
                     dashCharges += 2;
                 }
             }
             else if(dashCool >= DASH_COOLDOWN) {
+                dashChargeUI2.GetComponent<Image>().color = new Color32(0, 229, 255, 255);
                 dashCool -= DASH_COOLDOWN;
                 dashCharges += 1;
+            }
+            if(dashCharges == 1) {
+                dashChargeUI2.sizeDelta = new Vector2((dashCool / DASH_COOLDOWN) * 45, dashChargeUI2.sizeDelta.y);
             }
         }
         shmupDir.x = Input.GetAxis("Mouse X_");
