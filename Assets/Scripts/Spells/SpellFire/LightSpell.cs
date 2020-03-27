@@ -13,16 +13,33 @@ public class LightSpell : Spell
     private Vector3 newPos;
     private GameObject currProjectile = null;
 
+    private RaycastHit[] raycastSort(RaycastHit[] toSort, Vector3 origin) {
+        float iLength, jLength;
+        for(int i = 0; i < toSort.Length; i++) {
+            iLength = (toSort[i].point - origin).magnitude;
+            for(int j = 0; j < toSort.Length; j++) {
+                jLength = (toSort[j].point - origin).magnitude;
+                if(iLength < jLength) {
+                    RaycastHit temp = toSort[j];
+                    toSort[j] = toSort[i];
+                    toSort[i] = temp;
+                }
+            }
+        }
+
+        return toSort;
+    }
+
     public override void fire(SpellMod modifiers, Transform firePoint, Camera mainCam) {
-        GameObject temp = Instantiate(projectile, mainCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, mainCam.nearClipPlane)) - mainCam.transform.forward.normalized * 5, firePoint.rotation);
+        GameObject temp = Instantiate(projectile, mainCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, mainCam.nearClipPlane)) - mainCam.transform.forward.normalized * 10, firePoint.rotation);
         RaycastHit[] hits;
 
         ISpellCollision spellCollision = temp.GetComponent<ISpellCollision>();
 
-        temp.GetComponent<Rigidbody>().velocity = mainCam.transform.forward.normalized * 250;
-        hits = Physics.RaycastAll(mainCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, mainCam.nearClipPlane)), mainCam.transform.forward);
+        temp.GetComponent<Rigidbody>().velocity = mainCam.transform.forward.normalized * 500;
+        hits = Physics.SphereCastAll(mainCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, mainCam.nearClipPlane)), 0.5f, mainCam.transform.forward);
         if(hits.Length > 0) {
-            Array.Reverse(hits);
+            hits = raycastSort(hits, firePoint.position);
             foreach(RaycastHit hit in hits) {
                 if(hit.collider.tag == "Enemy") {
                     HealthControl collidedHealth = hit.collider.GetComponent<HealthControl>();

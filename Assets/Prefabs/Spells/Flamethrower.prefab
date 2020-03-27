@@ -4707,6 +4707,7 @@ ParticleSystemRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4781,3 +4782,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81355762718a8af4db262c4e055067cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  emitter: {fileID: 0}
+  attackCollider: {fileID: 0}

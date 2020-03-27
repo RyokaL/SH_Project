@@ -17,8 +17,8 @@ MonoBehaviour:
   spellAttributes:
     minDamage: 0.1
     maxDamage: 0.5
-    minTTL: 5
-    maxTTL: 10
+    minTTL: 0.2
+    maxTTL: 2.5
     minFireRate: 3
     maxFireRate: 20
     minRange: 1

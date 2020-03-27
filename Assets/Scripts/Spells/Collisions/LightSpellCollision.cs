@@ -12,9 +12,10 @@ public class LightSpellCollision : MonoBehaviour, ISpellCollision
     {
     }
 
-    void OnTriggerExit(Collider other) {
+    void OnTriggerEnter(Collider other) {
         if(other.gameObject.layer == 0) {
             GetComponent<Rigidbody>().velocity = Vector3.zero;
+            Destroy(gameObject, 5);
         }
     }
 

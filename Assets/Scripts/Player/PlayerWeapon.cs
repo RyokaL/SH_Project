@@ -29,6 +29,7 @@ public class PlayerWeapon : MonoBehaviour
     private bool chargeHeld = false;
     public float chargeTime = 0;
 
+    public RectTransform FireRateUI;
     public RectTransform weaponEnergyUI;
     public RectTransform weaponChargeUI;
     // Start is called before the first frame update
@@ -46,10 +47,15 @@ public class PlayerWeapon : MonoBehaviour
         switch(equipped.spellPrefab.spellAttributes.spellType) {
             //Normal Weapon with cooldown
             case 0:
+                FireRateUI.parent.gameObject.SetActive(true);
+                weaponChargeUI.parent.gameObject.SetActive(false);
+                weaponEnergyUI.parent.gameObject.SetActive(false);
+
                 if(couldFire || timeCount >= fireRateCooldown) {
                     if(Input.GetButton("Fire1")) {
                         fire = true;
                         if(couldFire) {
+                            FireRateUI.sizeDelta = new Vector2(100, FireRateUI.sizeDelta.y);
                             timeCount = 0;
                             couldFire = false;
                         }
@@ -61,9 +67,15 @@ public class PlayerWeapon : MonoBehaviour
                         timeCount -= fireRateCooldown;
                     }
                 }
+                else {
+                    FireRateUI.sizeDelta = new Vector2((timeCount / fireRateCooldown) * 100, FireRateUI.sizeDelta.y);
+                }
                 break;
             //Weapon with 'ammo'
             case 1:
+                FireRateUI.parent.gameObject.SetActive(false);
+                weaponChargeUI.parent.gameObject.SetActive(false);
+                weaponEnergyUI.parent.gameObject.SetActive(true);
                 if(switched) {
                     fireEnergy -= Time.deltaTime;
                     if(!Input.GetButton("Fire1")) {
@@ -92,6 +104,9 @@ public class PlayerWeapon : MonoBehaviour
                 break;
             //Charged Weapon
             case 2:
+                FireRateUI.parent.gameObject.SetActive(false);
+                weaponChargeUI.parent.gameObject.SetActive(true);
+                weaponEnergyUI.parent.gameObject.SetActive(false);
                 float fireTime = 1 / equipped.modifiers.fireRate;
                 if(Input.GetButton("Fire1")) {
                     chargeHeld = true;
