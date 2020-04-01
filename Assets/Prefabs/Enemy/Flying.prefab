@@ -54,6 +54,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -160,6 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currHealth: 0
   healthBarImg: {fileID: 6925859031682934405}
+  healthBarBG: {fileID: 246351124236013646}
 --- !u!54 &3206836109139847427
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -242,6 +244,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -273,12 +276,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2029037822071002651}
     m_Modifications:
-    - target: {fileID: 8904113510290048312, guid: 2fe524adaddf3204c89936419fe67e7d,
+    - target: {fileID: 3301238498307474699, guid: 2fe524adaddf3204c89936419fe67e7d,
         type: 3}
-      propertyPath: m_Name
-      value: HealthBarCanvas
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 8904113510290048312, guid: 2fe524adaddf3204c89936419fe67e7d,
+    - target: {fileID: 8163121575199364729, guid: 2fe524adaddf3204c89936419fe67e7d,
         type: 3}
       propertyPath: m_Layer
       value: 10
@@ -388,12 +391,12 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 8163121575199364729, guid: 2fe524adaddf3204c89936419fe67e7d,
+    - target: {fileID: 8904113510290048312, guid: 2fe524adaddf3204c89936419fe67e7d,
         type: 3}
-      propertyPath: m_Layer
-      value: 10
+      propertyPath: m_Name
+      value: HealthBarCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 3301238498307474699, guid: 2fe524adaddf3204c89936419fe67e7d,
+    - target: {fileID: 8904113510290048312, guid: 2fe524adaddf3204c89936419fe67e7d,
         type: 3}
       propertyPath: m_Layer
       value: 10
@@ -404,6 +407,12 @@ PrefabInstance:
 --- !u!224 &6097771554912399347 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8175681876539672709, guid: 2fe524adaddf3204c89936419fe67e7d,
+    type: 3}
+  m_PrefabInstance: {fileID: 2732129931037763446}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &246351124236013646 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 2774585400598787896, guid: 2fe524adaddf3204c89936419fe67e7d,
     type: 3}
   m_PrefabInstance: {fileID: 2732129931037763446}
   m_PrefabAsset: {fileID: 0}

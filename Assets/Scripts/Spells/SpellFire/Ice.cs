@@ -19,7 +19,7 @@ public class Ice : Spell
         projectRigid.velocity = mainCam.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2, 0)).direction * 20;
     }
 
-    public override void fire(SpellMod modifiers, Transform firePoint, Transform target) {
+    public override void fire(SpellMod modifiers, Vector3 firePoint, Vector3 target) {
         //Implement for tracking?
         return;
     }

@@ -15,12 +15,13 @@ MonoBehaviour:
   maxHealth: 10
   attack: {fileID: 11400000, guid: 91cd0f70277f43e4a88737adffeae311, type: 2}
   modifiers:
-    damage: 0
+    damage: 10
     dot: 0
     dotTick: 0
     dotLength: 0
     pierce: 0
     bounce: 0
+    damagePercent: 1
     track: 0
     numBullets: 1
     fireRate: 0.5

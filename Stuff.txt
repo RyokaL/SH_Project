@@ -1,0 +1,14 @@
+Difficulty levels:
+On each change, unopened chests re-roll
+
+0 - 5 mins: Starter; enemies killable in 1/2 hits most. Mainly weak ground enemies that don't attack often. Some slow turrets
+
+5 - 15 mins: Easy; Enemies take a couple of hits, start trying to hit the player but slowly. Standard flying enemies appear but are slow and weak
+
+15 - 25 mins: Medium; Swarms start to appear. Easier enemies start to have unblockable fire.
+
+25 - 35 mins: Hard; Swarms are more likely to assign a new leader. More enemies have unblockable fire.
+
+35 - 40 mins: Very Hard; TBC
+
+45 mins onward: Nightmare; TBC

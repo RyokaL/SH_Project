@@ -28,7 +28,7 @@ public class Fire : Spell {
         //Destroy(beam, modifiers.TTL);
     }
 
-    public override void fire(SpellMod modifiers, Transform firePoint, Transform target) {
+    public override void fire(SpellMod modifiers, Vector3 firePoint, Vector3 target) {
         return;
     }
 

@@ -205,10 +205,11 @@ public class FlyingSwarmLeaderAI : AI
         else {
             panic = true;
             rootObj = root;
-            GetComponent<MeshCollider>().enabled = false;
-            Renderer[] hides = GetComponentsInChildren<Renderer>();
-            foreach(Renderer h in hides) {
-                h.enabled = false;
+            foreach(Transform child in rootObj.transform) {
+                if(rootObj == child) {
+                    continue;
+                }
+                Destroy(child.gameObject);
             }
         }
     }

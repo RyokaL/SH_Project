@@ -32,11 +32,16 @@ public class PlayerControl : MonoBehaviour
 
     public RectTransform dashChargeUI1;
     public RectTransform dashChargeUI2;
+
+    public HealthControl playerHealth;
     // Start is called before the first frame update
     void Start()
     {
         _controller = GetComponent<CharacterController>();
+        this.playerHealth = GetComponent<HealthControl>();
         this.velocity = new Vector3(0,0,0);
+
+        playerHealth.setMaxHealth(100);
     }
 
     void Update() {
@@ -82,7 +87,8 @@ public class PlayerControl : MonoBehaviour
                 }
 
                 Vector3 movDir;
-                if(_controller.velocity.magnitude > 0) {
+                Vector3 adjustedVelocity = new Vector3(_controller.velocity.x, 0, _controller.velocity.z);
+                if(adjustedVelocity.magnitude > 0) {
                     movDir = _controller.velocity.normalized;
                 }
                 else {
@@ -131,6 +137,7 @@ public class PlayerControl : MonoBehaviour
         }
         shmupDir.x = Input.GetAxis("Mouse X_");
         shmupDir.z = Input.GetAxis("Mouse Y_");
+        playerHealth.heal(Time.deltaTime);
     }
 
     void FixedUpdate()

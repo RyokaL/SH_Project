@@ -57,7 +57,7 @@ public class FlyingAI : AI {
                     if(attackCooldown >= ATK_COOL) {
                         cooldown += Time.deltaTime;
                         if(cooldown >= (1 / stats.modifiers.fireRate) ) {
-                            stats.attack.fire(stats.modifiers, avTransform, c.transform);
+                            stats.attack.fire(stats.modifiers, avTransform.position, c.transform.position);
                             atkCount += 1;
                             cooldown -= (1 / stats.modifiers.fireRate);
                         }

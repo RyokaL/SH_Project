@@ -7,15 +7,15 @@ using UnityEngine;
 public class FlyingFastSpell : Spell
 {
 
-    public override void fire(SpellMod modifiers, Transform firePoint, Transform target) {
+    public override void fire(SpellMod modifiers, Vector3 firePoint, Vector3 target) {
         GameObject temp = Instantiate(projectile) as GameObject;
-        temp.transform.position = firePoint.position;
+        temp.transform.position = firePoint;
 
         ISpellCollision spellScript = temp.GetComponent<ISpellCollision>();
         spellScript.setModifiers(modifiers);
 
         Rigidbody projectRigid = temp.GetComponent<Rigidbody>();
-        projectRigid.velocity = (target.position - firePoint.position).normalized * 20;
+        projectRigid.velocity = (target - firePoint).normalized * 20;
     }
 
     public override void fire(SpellMod modifiers, Transform firePoint, Camera mainCam) {

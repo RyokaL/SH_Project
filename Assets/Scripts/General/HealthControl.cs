@@ -7,6 +7,7 @@ public class HealthControl : MonoBehaviour {
 
     public float currHealth = 0;
     public RectTransform healthBarImg = null;
+    public RectTransform healthBarBG = null;
     private bool hasDot = false;
     private float dotDamage = 0;
     private float dotTicks = 0;
@@ -27,6 +28,14 @@ public class HealthControl : MonoBehaviour {
         updateHealthBar();
     }
 
+    public void heal(float healing) {
+        currHealth += healing;
+        if(currHealth > maxHealth) {
+            currHealth = maxHealth;
+        }
+        updateHealthBar();
+    }
+
     public void applyDot(float damage, float ticks) {
         hasDot = true;
         dotDamage = damage;
@@ -35,7 +44,7 @@ public class HealthControl : MonoBehaviour {
 
     private void updateHealthBar() {
         if(healthBarImg != null) {
-            healthBarImg.sizeDelta = new Vector2((currHealth / maxHealth) * 200, healthBarImg.sizeDelta.y);
+            healthBarImg.sizeDelta = new Vector2((currHealth / maxHealth) * healthBarBG.sizeDelta.x, healthBarImg.sizeDelta.y);
         }
     }
 

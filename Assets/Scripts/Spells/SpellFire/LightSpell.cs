@@ -61,7 +61,7 @@ public class LightSpell : Spell
         }
     }
 
-    public override void fire(SpellMod modifiers, Transform firePoint, Transform target) {
+    public override void fire(SpellMod modifiers, Vector3 firePoint, Vector3 target) {
         //Implement for tracking?
         return;
     }
