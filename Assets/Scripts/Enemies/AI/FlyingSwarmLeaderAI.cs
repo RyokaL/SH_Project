@@ -21,6 +21,10 @@ public class FlyingSwarmLeaderAI : AI
     private bool panic = false;
     private GameObject rootObj;
 
+    private float stuckTimer = 0;
+
+    private float STUCK_TIME = 5;
+
     public override void nextUpdate(GameObject avatar, EnemyStats stats) {
         this.stats = stats;
         boids.RemoveAll(f => f == null);
@@ -90,14 +94,29 @@ public class FlyingSwarmLeaderAI : AI
                 leader.velocity = leader.velocity + v1 + r1 + r2 + v3;
             }
         }
+        else {
+            if(stuck) {
+                stuckTimer += Time.deltaTime;
+                if(stuckTimer >= STUCK_TIME) {
+                    stuck = false;
+                    leader.velocity = new Vector3(-lastChargeVelocity.x / 4, -lastChargeVelocity.y / 8, -lastChargeVelocity.z / 4);;
+                }
+            }
+        }
         avatar.transform.LookAt(leader.position + leader.velocity);
         calculateBoids(avatar, stats);
     }
 
     void OnTriggerEnter(Collider other) {
+        Rigidbody thisRigid = GetComponent<Rigidbody>();
+        
+        if(stuck && other.gameObject.tag.Equals("PlayerAttack")) {
+            stuck = false;
+            thisRigid.velocity = new Vector3(-lastChargeVelocity.x / 4, -lastChargeVelocity.y / 8, -lastChargeVelocity.z / 4);
+        }
+
         if(charge) {
             charge = false;
-            Rigidbody thisRigid = GetComponent<Rigidbody>();
             if(other.gameObject.tag.Equals("Player")) {
                 thisRigid.velocity = new Vector3(-lastChargeVelocity.x / 4, -lastChargeVelocity.y / 8, -lastChargeVelocity.z / 4);
                 HealthControl collided = other.GetComponent<HealthControl>();

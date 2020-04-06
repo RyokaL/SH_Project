@@ -5,60 +5,51 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
 
-    public GameObject[] enemiesToSpawn;
-
-    public float spawnChance = 0;
+    public SpawnTable spawnTable;
     public int maxEnemies = 1;
 
-    public float spawnCooldown = 20;
+    public float spawnCooldown = 0;
+    
+    public float cooldownCounter = 0;
+
     private int enemiesSpawned = 0;
     private int totalSpawned = 0;
-    private float cooldownCount = 0;
     public bool disableAfterSpawned = false;
     public int spawnBeforeDisable = 1;
+
+    private LevelStage lastSpawnStage = LevelStage.Starter;
+    private List<SpawnTableDetails> completeSpawnTable;
 
     private GameObject[] spawnedEnemies;
     // Start is called before the first frame update
     void Start()
     {
         spawnedEnemies = new GameObject[maxEnemies];
+        completeSpawnTable.AddRange(spawnTable.StarterTable);
     }
 
     // Update is called once per frame
+
+    public GameObject spawnNewEnemy(LevelStage diff) {
+        if(diff != lastSpawnStage) {
+            lastSpawnStage = diff;
+            completeSpawnTable.AddRange(spawnTable.getTable(diff));
+        }
+
+        if(cooldownCounter >= spawnCooldown && completeSpawnTable.Count > 0) {
+            cooldownCounter = 0;
+
+            int randIndex = Random.Range(0, completeSpawnTable.Count);
+            //Need to properly assign enemy stats here:
+            return Instantiate(completeSpawnTable[randIndex].enemyType, transform.position, completeSpawnTable[randIndex].enemyType.transform.rotation);
+        }
+        else {
+            return null;
+        }
+    }
+
     void Update()
     {
-        if(totalSpawned >= spawnBeforeDisable && disableAfterSpawned) {
-            Destroy(gameObject);
-        }
-        bool arrayChanged = false;
-        int firstIndex = maxEnemies;
-        for(int i = 0; i < enemiesSpawned; i++) {
-            if(spawnedEnemies[i] == null) {
-                enemiesSpawned -= 1;
-                arrayChanged = true;
-                if(firstIndex < i) {
-                    firstIndex = i;
-                }
-            }
-        }
-
-        if(arrayChanged) {
-            for(int i = firstIndex; i < maxEnemies - 1; i++) {
-                spawnedEnemies[i] = spawnedEnemies[i + 1];
-            }
-        }
-
-        if(cooldownCount < spawnCooldown) {
-            cooldownCount += Time.deltaTime;
-        }
-        else
-        {
-            cooldownCount -= spawnCooldown;
-            if(enemiesSpawned < maxEnemies && spawnChance >= (int)Random.Range(0, 100)) {
-                spawnedEnemies[enemiesSpawned] = Instantiate(enemiesToSpawn[(int)Random.Range(0, enemiesToSpawn.Length)], transform.position, transform.rotation);
-                enemiesSpawned += 1;
-                totalSpawned += 1;
-            }
-        }
+       cooldownCounter += Time.deltaTime;
     }
 }

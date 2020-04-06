@@ -36,13 +36,17 @@ public class GroundBasicAI : AI {
                 velocity = (lastKnownPos - avTransform.position).normalized;
             }
         }
-        velocity.y = -5f;
+        if(avControl.isGrounded) {
+            velocity.y = -2.5f;
+        }
+        else {
+            velocity.y = -9.81f;
+        }
         transform.LookAt(avTransform.position + new Vector3(velocity.x, 0, velocity.z));
         avControl.Move(velocity * Time.deltaTime);
     }
 
     void OnTriggerEnter(Collider other) {
-        Debug.Log("Hi");
         if(other.gameObject.tag == "Player") {
             other.gameObject.GetComponent<HealthControl>().takeDamage(stats.modifiers.damage);
         }

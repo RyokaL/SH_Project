@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d16d479bd66e1ea4aa66c90bc58d6508, type: 3}
+  m_Name: WallTurret
+  m_EditorClassIdentifier: 
+  enemyType: {fileID: 4451640895009936900, guid: 5043b1b641e933f48a51a9f0b1d0614b,
+    type: 3}
+  spawnWeighting: 1
+  maxStats: {fileID: 11400000, guid: d8c067b99bafd994f83e7f2431009510, type: 2}

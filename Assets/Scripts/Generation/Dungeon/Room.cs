@@ -6,6 +6,8 @@ public class Room : MonoBehaviour
 {
     private Transform[] exits;
     private Transform[] volume;
+
+    private List<SpawnManager> spawnPoints;
     //Initialise on instantiation
     void Awake()
     {
@@ -14,10 +16,14 @@ public class Room : MonoBehaviour
         for(int i = 0; i < thisObject.childCount; i ++) {
             nextObj = thisObject.GetChild(i);
             if(nextObj.gameObject.name.Equals("Exits")) {
-                populateArray(nextObj, false);
+                populateArray(nextObj, 0);
             }
             else if(nextObj.gameObject.name.Equals("Voxels")) {
-                populateArray(nextObj, true);
+                populateArray(nextObj, 1);
+            }
+            else if(nextObj.gameObject.name.Equals("SpawnPoints")) {
+                spawnPoints = new List<SpawnManager>(nextObj.childCount);
+                spawnPoints.AddRange(nextObj.GetComponentsInChildren<SpawnManager>());
             }
         }
         if(exits == null || volume == null) {
@@ -25,13 +31,13 @@ public class Room : MonoBehaviour
         }
     }
 
-    private void populateArray(Transform parent, bool type) {
-        Transform[] toPopulate;
-        if(type) {
+    private void populateArray(Transform parent, int type) {
+        Transform[] toPopulate = null;
+        if(type == 1) {
             volume = new Transform[parent.childCount];
             toPopulate = volume;
         }
-        else {
+        else if(type == 0) {
             exits = new Transform[parent.childCount];
             toPopulate = exits;
         }
@@ -53,6 +59,10 @@ public class Room : MonoBehaviour
 
     public Transform[] getVoxels() {
         return volume;
+    }
+
+    public List<SpawnManager> getSpawnPoints() { 
+        return spawnPoints;
     }
 
     public Transform[] getOpenExits() {

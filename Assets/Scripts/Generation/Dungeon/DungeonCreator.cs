@@ -10,6 +10,8 @@ public class DungeonCreator : MonoBehaviour
     public List<GameObject> rooms;
     [Tooltip("List of rooms with spawn points")]
     public List<GameObject> spawnRooms;
+
+    public SpawnHandler spawnHandler;
     public int gridSpacing;
     public Material[] roomColours;
 
@@ -27,8 +29,10 @@ public class DungeonCreator : MonoBehaviour
 
     private int roomsSpawned = 0;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        Random.InitState((int)System.DateTime.Now.Ticks);
+        Debug.Log(Random.seed);
         //Setup and spawn initial room
         grid = new Dictionary<Vector3, Transform>();
         roomsToProcess = new List<Room>();
@@ -171,6 +175,8 @@ public class DungeonCreator : MonoBehaviour
                 if(currRoom.getNumOpenExits() > 0) {
                     roomsToProcess.Add(currRoom);
                 }
+
+                spawnHandler.registerSpawnPoints(currRoom.getSpawnPoints());
 
                 actualRooms.Add(empty);
                 roomsSpawned++;

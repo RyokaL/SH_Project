@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d16d479bd66e1ea4aa66c90bc58d6508, type: 3}
+  m_Name: FlyingSwarmLeader
+  m_EditorClassIdentifier: 
+  enemyType: {fileID: 9188878726067458705, guid: 87a4e3099c6b0614ba684039ba628591,
+    type: 3}
+  spawnWeighting: 1
+  maxStats: {fileID: 11400000, guid: ae2fb04ccd988ec4881b40a3ef170854, type: 2}

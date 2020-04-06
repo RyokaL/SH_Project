@@ -38,6 +38,7 @@ public class LightSpell : Spell
 
         temp.GetComponent<Rigidbody>().velocity = mainCam.transform.forward.normalized * 500;
         hits = Physics.SphereCastAll(mainCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, mainCam.nearClipPlane)), 0.5f, mainCam.transform.forward);
+        Debug.DrawRay(mainCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, mainCam.nearClipPlane)), mainCam.transform.forward);
         if(hits.Length > 0) {
             hits = raycastSort(hits, firePoint.position);
             foreach(RaycastHit hit in hits) {

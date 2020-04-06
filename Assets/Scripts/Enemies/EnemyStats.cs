@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
-public class EnemyStats : ScriptableObject
+[System.Serializable]
+public class EnemyStats
 {
     public float maxHealth;
     public Spell attack;
