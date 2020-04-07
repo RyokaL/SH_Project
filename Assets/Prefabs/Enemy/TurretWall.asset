@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4226482cc0146184c96ccaa7a10581dc, type: 3}
   m_Name: TurretWall
   m_EditorClassIdentifier: 
-  StarterTable: []
+  StarterTable:
+  - {fileID: 11400000, guid: 8a42d748e6de1884fb9edd344fdf90cb, type: 2}
   EasyTable: []
   MediumTable: []
   HardTable: []

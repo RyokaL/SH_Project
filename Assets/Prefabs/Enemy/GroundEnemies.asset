@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4226482cc0146184c96ccaa7a10581dc, type: 3}
   m_Name: GroundEnemies
   m_EditorClassIdentifier: 
-  StarterTable: []
+  StarterTable:
+  - {fileID: 11400000, guid: 353b572c55f19a044885631991c9d990, type: 2}
   EasyTable: []
   MediumTable: []
   HardTable: []
