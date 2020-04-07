@@ -493,8 +493,14 @@ PrefabInstance:
     - target: {fileID: 6201901823240322448, guid: 4119c45b288b5eb40b7e8bf4a56cc9fe,
         type: 3}
       propertyPath: spawnCooldown
-      value: 0
+      value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 6201901823240322448, guid: 4119c45b288b5eb40b7e8bf4a56cc9fe,
+        type: 3}
+      propertyPath: spawnTable
+      value: 
+      objectReference: {fileID: 11400000, guid: 9476de38ffc13274b9086cd5546afb81,
+        type: 2}
     - target: {fileID: 6381188204581232761, guid: 4119c45b288b5eb40b7e8bf4a56cc9fe,
         type: 3}
       propertyPath: m_LocalPosition.x

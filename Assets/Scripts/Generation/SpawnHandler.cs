@@ -27,6 +27,15 @@ public class SpawnHandler : MonoBehaviour
 
     public Text timerText;
 
+    private int maxEnemies = 20;
+    private int maxEnemiesMod = 20;
+
+    private List<GameObject> enemiesSpawned;
+
+    void Start() {
+        enemiesSpawned = new List<GameObject>();
+    }
+
     public void registerSpawnPoints(List<SpawnManager> toAdd) {
         if(toAdd == null) {
             return;
@@ -43,10 +52,7 @@ public class SpawnHandler : MonoBehaviour
 
         System.TimeSpan timeElapsedSpan = System.TimeSpan.FromSeconds(timeElapsed);
 
-        string timeElapsedString = string.Format("{0:D2}:{1:D2}:{2:D2}", 
-                        timeElapsedSpan.Hours, 
-                        timeElapsedSpan.Minutes, 
-                        timeElapsedSpan.Seconds);
+        string timeElapsedString = string.Format("{0:D2}:{1:D2}:{2:D2}", timeElapsedSpan.Hours, timeElapsedSpan.Minutes, timeElapsedSpan.Seconds);
 
         timerText.text = timeElapsedString;
 
@@ -54,7 +60,6 @@ public class SpawnHandler : MonoBehaviour
 
         if(stage == LevelStage.Starter && timeMins >= 5) {
             stage = LevelStage.Easy;
-            //Update spawners;
         }
 
         if(stage == LevelStage.Easy && timeMins >= 15) {
@@ -72,12 +77,30 @@ public class SpawnHandler : MonoBehaviour
         if(stage == LevelStage.VeryHard && timeMins >= 45) {
             stage = LevelStage.Nightmare;
         }
-
+        
+        cleanEnemyList();
         spawnEnemiesNearPlayer();
+    }
+
+    private void cleanEnemyList() {
+        enemiesSpawned.RemoveAll(x => x == null);
+
     }
 
     private void spawnEnemiesNearPlayer() {
         //TODO: Implement this for Tuesday 07/04/2020
+        spawnPoints.Sort((x, y) => Comparer<float>.Default.Compare((player.transform.position - x.gameObject.transform.position).magnitude, ((player.transform.position - y.gameObject.transform.position).magnitude)));
+
+        foreach(SpawnManager s in spawnPoints) {
+            if(enemiesSpawned.Count > maxEnemies) {
+                break;
+            }
+            GameObject newSpawn = s.spawnNewEnemy(stage, timeElapsed);
+            if(newSpawn != null) {
+                enemiesSpawned.Add(newSpawn);
+                Debug.Log("Spawned");
+            }
+        }
     }
 
 }

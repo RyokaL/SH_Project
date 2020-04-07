@@ -8,13 +8,14 @@ public class ChestSpawn : MonoBehaviour {
 
     private GameObject spawnedChest;
     void Start() {
-        if(transform.parent != null)
-        if(Random.Range(0, 100) < spawnChance) {
-            spawnedChest = Instantiate(treasureChest, transform.position, transform.rotation) as GameObject;
-            spawnedChest.transform.parent = transform;
-        }
-        else {
-            Destroy(gameObject);
+        if(transform.parent != null) {
+            if(Random.Range(0, 100) < spawnChance) {
+                spawnedChest = Instantiate(treasureChest, transform.position, transform.rotation) as GameObject;
+                spawnedChest.transform.parent = transform;
+            }
+            else {
+                Destroy(gameObject);
+            }
         }
     }
 }

@@ -566,7 +566,7 @@ PrefabInstance:
     - target: {fileID: 6201901823240322448, guid: 4119c45b288b5eb40b7e8bf4a56cc9fe,
         type: 3}
       propertyPath: spawnCooldown
-      value: 0
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6201901823240322448, guid: 4119c45b288b5eb40b7e8bf4a56cc9fe,
         type: 3}
@@ -579,6 +579,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4451640895009936900, guid: 5043b1b641e933f48a51a9f0b1d0614b,
         type: 3}
+    - target: {fileID: 6201901823240322448, guid: 4119c45b288b5eb40b7e8bf4a56cc9fe,
+        type: 3}
+      propertyPath: spawnTable
+      value: 
+      objectReference: {fileID: 11400000, guid: b2a5aa011d181d241b005aedf744d8cf,
+        type: 2}
     - target: {fileID: 6381188204581232761, guid: 4119c45b288b5eb40b7e8bf4a56cc9fe,
         type: 3}
       propertyPath: m_LocalPosition.x

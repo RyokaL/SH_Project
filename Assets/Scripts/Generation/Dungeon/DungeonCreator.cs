@@ -32,7 +32,6 @@ public class DungeonCreator : MonoBehaviour
     void Awake()
     {
         Random.InitState((int)System.DateTime.Now.Ticks);
-        Debug.Log(Random.seed);
         //Setup and spawn initial room
         grid = new Dictionary<Vector3, Transform>();
         roomsToProcess = new List<Room>();
