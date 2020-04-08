@@ -26,4 +26,4 @@ MonoBehaviour:
     minDot: 0.1
     maxDot: 5
     spellType: 2
-  spellName: Lightning
+  spellName: Thunder

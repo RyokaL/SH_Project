@@ -31,6 +31,6 @@ MonoBehaviour:
   sightAngle: 360
   attacks:
   - {fileID: 11400000, guid: 8c12587c7d64a524d96476cac48ad3e2, type: 2}
-  minSpeed: 5
-  speedMod: 1
-  maxSpeed: 10
+  minSpeed: 15
+  speedMod: 2
+  maxSpeed: 40

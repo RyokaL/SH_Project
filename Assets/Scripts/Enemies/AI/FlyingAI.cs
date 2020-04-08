@@ -21,7 +21,7 @@ public class FlyingAI : AI {
                     //Cast a ray to see if player is visible
                     RaycastHit hit;
                     //We want to ignore other enemy colliders
-                    LayerMask mask = ~(1 << 10);
+                    LayerMask mask = LayerMask.GetMask("PlayerLayer");
                     if(Physics.Raycast(avTransform.position, (c.transform.position - avTransform.position), out hit, stats.sightRange, mask)) {
                         Debug.DrawRay(avTransform.position, (c.transform.position - avTransform.position));
                         //If the collider we hit is the player, we have a direct line

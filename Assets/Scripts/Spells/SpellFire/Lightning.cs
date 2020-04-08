@@ -6,7 +6,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Spells", menuName = "Spells/Lightning")]
 public class Lightning : Spell
 {
-    public string spellName;
 
     public override void fire(SpellMod modifiers, Transform firePoint, Camera mainCam) {
         GameObject temp = Instantiate(projectile) as GameObject;

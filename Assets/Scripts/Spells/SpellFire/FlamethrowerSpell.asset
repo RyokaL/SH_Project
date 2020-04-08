@@ -16,13 +16,14 @@ MonoBehaviour:
     type: 3}
   spellAttributes:
     minDamage: 0.1
-    maxDamage: 0.5
+    maxDamage: 2
     minTTL: 0.2
     maxTTL: 2.5
-    minFireRate: 3
-    maxFireRate: 20
+    minFireRate: 5
+    maxFireRate: 30
     minRange: 1
     maxRange: 5
     minDot: 0.1
     maxDot: 0.5
     spellType: 1
+  spellName: Flame

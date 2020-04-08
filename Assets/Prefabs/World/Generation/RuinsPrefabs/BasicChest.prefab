@@ -56,6 +56,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -105,4 +106,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08193fbe1a4b0ba42985a7f2506bc0bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponChoose: {fileID: 11400000, guid: 361acf6237519f344871488c02c52a9c, type: 2}
+  spellTypes: {fileID: 11400000, guid: 3f1189fe5f95d084e860cd2abc732d30, type: 2}

@@ -7,8 +7,6 @@ using System;
 [CreateAssetMenu(fileName = "Spells", menuName = "Spells/Light")]
 public class LightSpell : Spell
 {
-    public string spellName;
-
     private bool fired = false;
     private Vector3 newPos;
     private GameObject currProjectile = null;

@@ -251,10 +251,12 @@ public class DungeonCreator : MonoBehaviour
 
         GameObject rightWall = Instantiate(boundCheck, new Vector3(xPos, smallestVoxel.y + (distance.y / 4.25f), largestVoxel.z + boundOffset / 2), boundCheck.transform.rotation) as GameObject;
         rightWall.transform.localScale = new Vector3(distance.x + boundOffset, distance.y, 1);
+
+        spawnHandler.registerBounds(smallestVoxel, largestVoxel);
     }
 
     private void closeDoors() {
-        //TODO: Check if we're connected to a different open exit, randomly leave some open
+        //Check if we're connected to a different open exit, randomly leave some open
         List<Transform> allExits = actualRooms.SelectMany(room => room.GetComponentInChildren<Room>().getOpenExits()).ToList(); 
 
         foreach(GameObject room in actualRooms) {

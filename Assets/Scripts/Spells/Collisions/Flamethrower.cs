@@ -45,7 +45,7 @@ public class Flamethrower : MonoBehaviour, ISpellCollision
     {
         calcDamage = false;
         timeSinceStart += Time.deltaTime;
-        float maxTime = 1 / modifiers.TTL;
+        float maxTime = 1 / modifiers.range;
         if(timeSinceStart >= maxTime) {
             timeSinceStart = maxTime;
         }

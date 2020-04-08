@@ -15,15 +15,15 @@ MonoBehaviour:
   projectile: {fileID: 2116692700105997776, guid: c36098652cd84834e91edca54bc6dec5,
     type: 3}
   spellAttributes:
-    minDamage: 0
-    maxDamage: 0
+    minDamage: 30
+    maxDamage: 500
     minTTL: 0
     maxTTL: 0
-    minFireRate: 0
-    maxFireRate: 0
+    minFireRate: 0.33333
+    maxFireRate: 2
     minRange: 0
     maxRange: 0
     minDot: 0
-    maxDot: 0
+    maxDot: 20
     spellType: 0
-  spellName: Light
+  spellName: Light Ray

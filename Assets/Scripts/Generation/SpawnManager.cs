@@ -6,6 +6,8 @@ public class SpawnManager : MonoBehaviour
 {
 
     public SpawnTable spawnTable;
+
+    public GameObject particleEffect;
     public int maxEnemies = 1;
 
     public float spawnCooldown = 30;
@@ -49,11 +51,18 @@ public class SpawnManager : MonoBehaviour
             cooldownCounter = 0;
 
             int randIndex = Random.Range(0, completeSpawnTable.Count);
-            //Need to properly assign enemy stats here:
+            if(diff == LevelStage.Medium) {
+                randIndex = Random.Range(randIndex, completeSpawnTable.Count);
+            }
+            if(diff == LevelStage.VeryHard) {
+                randIndex = Random.Range(randIndex, completeSpawnTable.Count);
+            }
+
             SpawnTableDetails entry = completeSpawnTable[randIndex];
             GameObject newEnemy = Instantiate(entry.enemyType, transform.position, transform.rotation);
             newEnemy.GetComponent<Enemy>().stats = calcStats(entry.maxStats, diff, time);
             spawnedEnemies.Add(newEnemy);
+            Instantiate(particleEffect, transform.position, transform.rotation);
             return newEnemy;
         }
         else {
@@ -61,7 +70,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    private EnemyStats calcStats(EnemyMaxStats max, LevelStage diff, float time) {
+    public static EnemyStats calcStats(EnemyMaxStats max, LevelStage diff, float time) {
         float health = max.minHealth + (int) (time/60) * max.healthMod;
         if(health > max.maxHealth) {
             health = max.maxHealth;
@@ -99,7 +108,7 @@ public class SpawnManager : MonoBehaviour
         }
 
         modifiers.TTL = Random.Range(attr.minTTL, attr.maxTTL);
-        modifiers.fireRate = Random.Range(attr.minFireRate, attr.minFireRate + attr.minFireRate * time / 20);
+        modifiers.fireRate = Random.Range(attr.minFireRate, attr.minFireRate + attr.minFireRate * time / 900);
         if(modifiers.fireRate > attr.maxFireRate) {
             modifiers.fireRate = attr.maxFireRate;
         }
