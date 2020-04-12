@@ -222,7 +222,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b57e36803b63b4eb703ac2fb47ad4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: d19836e16a46c4541a3090c404fff07b, type: 2}
+  stats:
+    maxHealth: 0
+    attack: {fileID: 0}
+    modifiers:
+      damage: 0
+      dot: 0
+      dotTick: 0
+      dotLength: 0
+      pierce: 0
+      bounce: 0
+      damagePercent: 1
+      track: 0
+      numBullets: 1
+      fireRate: 1
+      TTL: 0
+      range: 0
+    sightRange: 0
+    sightAngle: 0
+    speed: 0
   health: {fileID: 1063831459952157757}
   rootTransform: {fileID: 5322741686264389762}
   ai: {fileID: 4642800039558948596}
@@ -270,6 +288,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boids: []
+  swarmMembers: {fileID: 7220280143030429077, guid: 44250a18277b89543833616999cf90d4,
+    type: 3}
 --- !u!1001 &8078547098294538735
 PrefabInstance:
   m_ObjectHideFlags: 0

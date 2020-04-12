@@ -6,7 +6,7 @@ public class TurretAIContinuous : AI {
 
     public float cooldown = 0;
     
-    public override void nextUpdate(GameObject avatar, EnemyStats stats) {
+    public override bool nextUpdate(GameObject avatar, EnemyStats stats) {
         Transform avTransform = avatar.transform;
         cooldown += Time.deltaTime;
         if(cooldown >= (1 / stats.modifiers.fireRate)) {
@@ -14,6 +14,7 @@ public class TurretAIContinuous : AI {
             stats.attack.fire(stats.modifiers, firePos, firePos - avTransform.up * 10);
             cooldown -= (1 / stats.modifiers.fireRate);
         }
+        return true;
     }
 
     public override void onDeath(GameObject root) {

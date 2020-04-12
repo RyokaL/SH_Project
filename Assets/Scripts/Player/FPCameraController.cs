@@ -17,6 +17,8 @@ public class FPCameraController : MonoBehaviour
     
      void Start()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void OnEnable() 
@@ -29,9 +31,6 @@ public class FPCameraController : MonoBehaviour
     }
 
     void Update() {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
         inpX = Input.GetAxis("Mouse X_");
         inpY = Input.GetAxis("Mouse Y_");
         mouseInp += new Vector2(inpX, inpY);

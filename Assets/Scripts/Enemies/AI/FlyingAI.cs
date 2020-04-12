@@ -12,7 +12,8 @@ public class FlyingAI : AI {
     private int atkCount = 0;
     private int MAX_ATK = 3;
     bool arrived = false;
-    public override void nextUpdate(GameObject avatar, EnemyStats stats) {
+    public override bool nextUpdate(GameObject avatar, EnemyStats stats) {
+        bool action = false;
         Transform avTransform = avatar.transform;
         Collider[] playerInRange = Physics.OverlapSphere(avTransform.position, stats.sightRange);
         foreach(Collider c in playerInRange) {
@@ -26,6 +27,7 @@ public class FlyingAI : AI {
                         Debug.DrawRay(avTransform.position, (c.transform.position - avTransform.position));
                         //If the collider we hit is the player, we have a direct line
                         if(hit.collider.tag == "Player") {
+                            action = true;
                             Rigidbody rigid = gameObject.GetComponent<Rigidbody>();
                             //rigid.MoveRotation(Quaternion.LookRotation(c.transform.position, c.transform.position));
                             avTransform.LookAt(c.transform);
@@ -74,6 +76,7 @@ public class FlyingAI : AI {
             }
             //If no player in range, patrol
         }
+        return action;
     }
 
     public override void onDeath(GameObject root) {

@@ -9,6 +9,8 @@ public class Enemy : MonoBehaviour
     public HealthControl health;
     public Transform rootTransform;
 
+    private bool dead;
+
     public AI ai;
 
     void Awake() {
@@ -29,6 +31,11 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         if(health.getHealth() <= 0) {
+            if(!dead) {
+                GameObject.Find("PlayerTest").GetComponent<OpenChest>().addPoints((int)stats.maxHealth);
+                dead = true;
+            }
+            
             if(rootTransform != null) {
                 ai.onDeath(rootTransform.gameObject);
             }
@@ -39,6 +46,6 @@ public class Enemy : MonoBehaviour
     }
 
     void FixedUpdate() {
-        ai.nextUpdate(rootTransform.gameObject, stats);
+        ai.timeCheck(rootTransform.gameObject, stats);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OpenChest : MonoBehaviour
 {
@@ -15,6 +16,12 @@ public class OpenChest : MonoBehaviour
 
     public Camera playerCam;
 
+    public int points = 0;
+    public int score = 0;
+
+    public Text pointsDisplay;
+    public Text scoreDisplay;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,6 +31,8 @@ public class OpenChest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        pointsDisplay.text = "Gold: " + points;
+        scoreDisplay.text = "Score: " + score;
         if(Input.GetButtonDown("Submit")) {
             wantToOpen = true;
         }
@@ -34,33 +43,37 @@ public class OpenChest : MonoBehaviour
         }
     }
 
+    public void addPoints(int points) {
+        this.points += points * 10;
+        score += points * 10;
+    }
+
+    private void closeChest() {
+        chestGUI.SetActive(false);
+        close = false;
+        open = false;
+        wantToOpen = false;
+        lastChestOpen = null;
+        Time.timeScale = 1f;
+    }
+
     void FixedUpdate() {
-        RaycastHit check;
-        if(Physics.SphereCast(playerCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, playerCam.nearClipPlane)), 1, playerCam.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2, 0)).direction, out check, 5)) {
-            if(!check.collider.gameObject.GetComponent<ChestCollider>()) {
-                chestGUI.SetActive(false);
-                close = false;
-                open = false;
-                wantToOpen = false;
-                lastChestOpen = null;
-                Time.timeScale = 1f;
-            }
-        }
+        // RaycastHit check;
+        // if(Physics.SphereCast(playerCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, playerCam.nearClipPlane)), 1, playerCam.ScreenPointToRay(new Vector3(Screen.width/2, Screen.height/2, 0)).direction, out check, 5)) {
+        //     if(!check.collider.gameObject.GetComponent<ChestCollider>()) {
+        //         closeChest();
+        //     }
+        // }
         if(close) {
-            chestGUI.SetActive(false);
-            close = false;
-            open = false;
-            wantToOpen = false;
-            lastChestOpen = null;
-            Time.timeScale = 1f;
+            closeChest();
         }
-        if(open && wantToOpen) {
-            gameObject.GetComponentInChildren<PlayerWeapon>().equipWeapon(lastChestOpen.getWeaponInfo());
-            lastChestOpen.takeWeapon();
-            open = false;
-            wantToOpen = false;
-            lastChestOpen = null;
-            Time.timeScale = 1f;
+        else if(open && wantToOpen) {
+            if(points >= 500) {
+                points -= 500;
+                gameObject.GetComponentInChildren<PlayerWeapon>().equipWeapon(lastChestOpen.getWeaponInfo());
+                lastChestOpen.takeWeapon();
+                closeChest();
+            }
         }
         else if(wantToOpen) {
             wantToOpen = false;

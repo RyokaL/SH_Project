@@ -53,6 +53,10 @@ public class SpawnHandler : MonoBehaviour
         spawnPoints.AddRange(toAdd);
     }
 
+    public void incDiff() {
+        timeElapsed += 90;
+    }
+
     public void registerBounds(Vector3 min, Vector3 max) {
         this.minBound = min;
         this.maxBound = max;
@@ -76,27 +80,27 @@ public class SpawnHandler : MonoBehaviour
 
         float timeMins = timeElapsed / 60;
 
-        if(stage == LevelStage.Starter && timeMins >= 5) {
+        if(stage == LevelStage.Starter && timeMins >= 1) {
             stage = LevelStage.Easy;
             updateSpawnTable();
         }
 
-        if(stage == LevelStage.Easy && timeMins >= 15) {
+        if(stage == LevelStage.Easy && timeMins >= 3) {
             stage = LevelStage.Medium;
             updateSpawnTable();
         }
 
-        if(stage == LevelStage.Medium && timeMins >= 25) {
+        if(stage == LevelStage.Medium && timeMins >= 5) {
             stage = LevelStage.Hard;
             updateSpawnTable();
         }
 
-        if(stage == LevelStage.Hard && timeMins >= 35) {
+        if(stage == LevelStage.Hard && timeMins >= 7) {
             stage = LevelStage.VeryHard;
             updateSpawnTable();
         }
 
-        if(stage == LevelStage.VeryHard && timeMins >= 45) {
+        if(stage == LevelStage.VeryHard && timeMins >= 10) {
             stage = LevelStage.Nightmare;
             updateSpawnTable();
         }
@@ -133,6 +137,10 @@ public class SpawnHandler : MonoBehaviour
                 GameObject newEnemy = Instantiate(entry.enemyType, spawnPos, entry.enemyType.transform.rotation);
                 newEnemy.GetComponent<Enemy>().stats = SpawnManager.calcStats(entry.maxStats, stage, timeElapsed);
                 enemiesSpawned.Add(newEnemy);
+
+                if(newEnemy.GetComponent<FlyingSwarmLeaderAI>()) {
+                    newEnemy.GetComponent<FlyingSwarmLeaderAI>().spawnSwarm();
+                }
             }
         }
     }

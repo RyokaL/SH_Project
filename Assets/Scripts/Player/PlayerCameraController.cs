@@ -16,7 +16,8 @@ public class PlayerCameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void OnEnable()
@@ -25,9 +26,6 @@ public class PlayerCameraController : MonoBehaviour
     }
 
     void Update() {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
         inpX += Input.GetAxis("Mouse X");
         inpY += Input.GetAxis("Mouse Y");
         inpY = Mathf.Clamp(inpY, MIN_Y_ANGLE, MAX_Y_ANGLE);

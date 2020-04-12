@@ -10,26 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2510cee579f91cd4fa867b1d3e532713, type: 3}
-  m_Name: FlyingSwarmLeader
+  m_Name: FlyingSwarmMember
   m_EditorClassIdentifier: 
-  minHealth: 20
-  healthMod: 5
+  minHealth: 1
+  healthMod: 0.5
   maxHealth: 10
   attackModifiers:
-    minDamage: 20
-    maxDamage: 40
+    minDamage: 2
+    maxDamage: 5
     minTTL: 0
     maxTTL: 0
-    minFireRate: 0
-    maxFireRate: 0
+    minFireRate: 0.5
+    maxFireRate: 2
     minRange: 0
     maxRange: 0
     minDot: 0
     maxDot: 0
     spellType: 0
-  sightRange: 300
-  sightAngle: 360
-  attacks: []
-  minSpeed: 7
-  speedMod: 1
-  maxSpeed: 15
+  sightRange: 0
+  sightAngle: 0
+  attacks:
+  - {fileID: 11400000, guid: 91cd0f70277f43e4a88737adffeae311, type: 2}
+  minSpeed: 5
+  speedMod: 2
+  maxSpeed: 10

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 339985c37af2472459fb82f93ff202aa, type: 3}
+  m_Name: StartingWeapon
+  m_EditorClassIdentifier: 
+  weaponName: Snowball
+  staff: {fileID: 0}
+  cradle: {fileID: 0}
+  gem: {fileID: 0}
+  spellPrefab: {fileID: 11400000, guid: 678a51379c5b7614091a813763975b1a, type: 2}
+  modifiers:
+    damage: 5
+    dot: 0
+    dotTick: 0
+    dotLength: 0
+    pierce: 0
+    bounce: 0
+    damagePercent: 1
+    track: 0
+    numBullets: 1
+    fireRate: 1
+    TTL: 5
+    range: 0

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerWeapon : MonoBehaviour
 {
@@ -32,17 +33,29 @@ public class PlayerWeapon : MonoBehaviour
     public RectTransform FireRateUI;
     public RectTransform weaponEnergyUI;
     public RectTransform weaponChargeUI;
+
+    public Text weaponType;
+
+    public List<Weapon> inventory;
+
+
     // Start is called before the first frame update
     void Start()
     {
         pc = GetComponentInParent<PlayerControl>();
         fireRateCooldown = 1 / equipped.modifiers.fireRate;
         maxTTL = equipped.modifiers.TTL;
+        inventory = new List<Weapon>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetButtonDown("Switch")) {
+            switchWeapon();
+        }
+
+        weaponType.text = equipped.spellPrefab.spellName;
         timeCount += Time.deltaTime;
         switch(equipped.spellPrefab.spellAttributes.spellType) {
             //Normal Weapon with cooldown
@@ -139,6 +152,18 @@ public class PlayerWeapon : MonoBehaviour
         }
     }
 
+    public void switchWeapon() {
+        if(inventory.Count > 0) {
+            Weapon temp = equipped;
+            inventory.Add(equipped);
+            equipped = inventory[0];
+            inventory.RemoveAt(0);
+
+            fireRateCooldown = 1 / equipped.modifiers.fireRate;
+            maxTTL = equipped.modifiers.TTL;
+        }
+    }
+
     void FixedUpdate()
     {
         if(fire) {
@@ -154,8 +179,13 @@ public class PlayerWeapon : MonoBehaviour
     }
 
     public void equipWeapon(Weapon newWeapon) {
-        equipped = newWeapon;
-        fireRateCooldown = 1 / equipped.modifiers.fireRate;
-        maxTTL = equipped.modifiers.TTL;
+        if(inventory.Count < 2) {
+            inventory.Add(newWeapon);
+        }
+        else {
+            equipped = newWeapon;
+            fireRateCooldown = 1 / equipped.modifiers.fireRate;
+            maxTTL = equipped.modifiers.TTL;
+        }
     }
 }

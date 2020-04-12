@@ -10,7 +10,8 @@ public class GroundBasicAI : AI {
     private bool wasPlayerInRange = false;
     private EnemyStats stats;
 
-    public override void nextUpdate(GameObject avatar, EnemyStats stats) {
+    public override bool nextUpdate(GameObject avatar, EnemyStats stats) {
+        bool action = false;
         this.stats = stats;
         wasPlayerInRange = false;
         Transform avTransform = avatar.transform;
@@ -21,6 +22,7 @@ public class GroundBasicAI : AI {
             if(c.gameObject.tag == "Player") {
                 wasPlayerInRange = true;
                 if(Vector3.Angle(avTransform.position, c.transform.position) < stats.sightAngle) {
+                    action = true;
                     lastKnownPos = c.transform.position;
                     //avRigid.velocity = ((c.transform.position - avTransform.position).normalized * 3);
                     velocity = (c.transform.position - avTransform.position).normalized;
@@ -34,6 +36,7 @@ public class GroundBasicAI : AI {
             else {
                 //avRigid.velocity = ((lastKnownPos - avTransform.position).normalized * 3);
                 velocity = (lastKnownPos - avTransform.position).normalized;
+                action = true;
             }
         }
         if(avControl.isGrounded) {
@@ -44,6 +47,7 @@ public class GroundBasicAI : AI {
         }
         transform.LookAt(avTransform.position + new Vector3(velocity.x, 0, velocity.z));
         avControl.Move(velocity * Time.deltaTime);
+        return action;
     }
 
     void OnTriggerEnter(Collider other) {

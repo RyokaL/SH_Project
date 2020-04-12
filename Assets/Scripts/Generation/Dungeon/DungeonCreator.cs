@@ -11,6 +11,8 @@ public class DungeonCreator : MonoBehaviour
     [Tooltip("List of rooms with spawn points")]
     public List<GameObject> spawnRooms;
 
+    public List<GameObject> goalRooms;
+
     public SpawnHandler spawnHandler;
     public int gridSpacing;
     public Material[] roomColours;
@@ -28,10 +30,19 @@ public class DungeonCreator : MonoBehaviour
     private float boundOffset = 200;
 
     private int roomsSpawned = 0;
+
+    private int seed = 0;
+
+    public int getSeed() {
+        return seed;
+    }
     // Start is called before the first frame update
     void Awake()
     {
-        Random.InitState((int)System.DateTime.Now.Ticks);
+        GenSettings settings = GameObject.Find("Settings").GetComponent<GenSettings>();
+        maxRooms = settings.maxRooms;
+        this.seed = settings.seedVal;
+        Random.InitState(seed);
         //Setup and spawn initial room
         grid = new Dictionary<Vector3, Transform>();
         roomsToProcess = new List<Room>();
@@ -65,33 +76,19 @@ public class DungeonCreator : MonoBehaviour
         Debug.Log("Time taken: " + stopwatch.ElapsedMilliseconds);
     }
 
-    private void generateMap() {
-        //Worry about closing off unfinished exits later :)
-         //TODO: Add in different voxel size doors?
+    private bool placeRoom(Room linkRoom, GameObject newRoomObj) {
         GameObject empty;
-        while(roomsSpawned < maxRooms && roomsToProcess.Count > 0) {
-            roomsToProcess.Randomise();
-            //Choose a room to process, if all exits are closed, remove and continue
-            Room linkRoom = roomsToProcess[(int)Random.Range(0, roomsToProcess.Count)];
-            roomsToProcess.Remove(linkRoom);
 
-            if(linkRoom.getNumOpenExits() <= 0) {
-               continue;
-            }
+         Room currRoom = newRoomObj.GetComponent<Room>();
             //Pick an exit from the already existing room
             Transform[] linkExits = linkRoom.getOpenExits();
             Transform exitExisting = linkExits[(int)Random.Range(0, linkExits.Length)];
-
-            //Now randomly choose a room to attach
-            GameObject roomToSpawn = rooms[(int)Random.Range(0, rooms.Count)];
-            GameObject newRoomObj = Instantiate(roomToSpawn, transform.position, transform.rotation) as GameObject;
-            Room currRoom = newRoomObj.GetComponent<Room>();
 
             //If both have only 1 exit available and we have other rooms, try again
             if(currRoom.getNumOpenExits() == 1 && linkRoom.getNumOpenExits() == 1 && (roomsToProcess.Count > 0 || roomsSpawned < maxRooms / 2)) {
                 Destroy(newRoomObj);
                 roomsToProcess.Add(linkRoom);
-                continue;
+                return false;
             }
 
             //Pick an exit from this room to link up
@@ -165,6 +162,7 @@ public class DungeonCreator : MonoBehaviour
                 Destroy(newRoomObj);
                 Destroy(empty);
                 empty = null;
+                return false;
             }
             else {
                 fillGrid(roomVoxels, newVoxels);
@@ -181,13 +179,57 @@ public class DungeonCreator : MonoBehaviour
                 roomsSpawned++;
             }
 
+        return true;
+    }
+
+    private void generateMap() {
+        while(roomsSpawned < maxRooms && roomsToProcess.Count > 0) {
+            roomsToProcess.Randomise();
+            //Choose a room to process, if all exits are closed, remove and continue
+            Room linkRoom = roomsToProcess[(int)Random.Range(0, roomsToProcess.Count)];
+            roomsToProcess.Remove(linkRoom);
+
+            if(linkRoom.getNumOpenExits() <= 0) {
+               continue;
+            }
+
+            //Now randomly choose a room to attach
+            GameObject roomToSpawn = rooms[(int)Random.Range(0, rooms.Count)];
+            GameObject newRoomObj = Instantiate(roomToSpawn, transform.position, transform.rotation) as GameObject;
+            
+            placeRoom(linkRoom, newRoomObj);
+           
             if(linkRoom.getNumOpenExits() > 0) {
                 roomsToProcess.Add(linkRoom);
             }
         }
+        placeGoals();
+
         tidyUpEditor();
         closeDoors();
         generateLevelBounds();
+    }
+
+    private void placeGoals() {
+        List<GameObject> openExits = actualRooms.Where(x => x.GetComponentInChildren<Room>().getNumOpenExits() > 0).ToList();
+
+        for(int i = 0; i < 4; i++) {
+            int room = Random.Range(0, openExits.Count);
+            GameObject toLinkObj = openExits.ElementAt(room);
+            Room toLink = toLinkObj.GetComponentInChildren<Room>();
+            openExits.RemoveAt(room);
+
+            GameObject goalRoom = goalRooms[Random.Range(0, goalRooms.Count)];
+            GameObject goalRoomObj = Instantiate(goalRoom, transform.position, transform.rotation) as GameObject;
+
+            if(!placeRoom(toLink, goalRoomObj)) {
+                openExits.Add(toLinkObj);
+                i--;
+            }
+            else {
+                Debug.Log("spawned");
+            }
+        }
     }
 
     private void generateLevelBounds() {
@@ -256,7 +298,6 @@ public class DungeonCreator : MonoBehaviour
     }
 
     private void closeDoors() {
-        //Check if we're connected to a different open exit, randomly leave some open
         List<Transform> allExits = actualRooms.SelectMany(room => room.GetComponentInChildren<Room>().getOpenExits()).ToList(); 
 
         foreach(GameObject room in actualRooms) {

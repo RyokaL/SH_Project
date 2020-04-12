@@ -25,13 +25,23 @@ public class FlyingSwarmLeaderAI : AI
 
     private float STUCK_TIME = 5;
 
-    public override void nextUpdate(GameObject avatar, EnemyStats stats) {
+    public GameObject swarmMembers;
+
+    public void spawnSwarm() {
+        int size = Random.Range(1, 10);
+        for(int i = 0; i < size; i++) {
+            GameObject newMember = Instantiate(swarmMembers, transform.position, transform.rotation);
+            boids.Add(newMember.GetComponent<FlyingSwarmAI>());
+        }
+    }
+
+    public override bool nextUpdate(GameObject avatar, EnemyStats stats) {
         this.stats = stats;
         boids.RemoveAll(f => f == null);
         nBoids = boids.Count;
         if(nBoids == 0 && panic) {
             Destroy(rootObj);
-            return;
+            return false;
         }
         sumOfAllBoids = Vector3.zero;
 
@@ -105,6 +115,7 @@ public class FlyingSwarmLeaderAI : AI
         }
         avatar.transform.LookAt(leader.position + leader.velocity);
         calculateBoids(avatar, stats);
+        return true;
     }
 
     void OnTriggerEnter(Collider other) {
@@ -150,7 +161,7 @@ public class FlyingSwarmLeaderAI : AI
             //Rule 1: Boids always move towards the centre of mass of the other boids
             Vector3 centerOfOtherBoids = (sumOfAllBoids - boidRigid.position) / (nBoids - 1);
             if(nBoids == 1) {
-                v1 =Vector3.zero;
+                v1 = Vector3.zero;
             }
             else {
                  v1 = (centerOfOtherBoids - b.transform.position) / 100;

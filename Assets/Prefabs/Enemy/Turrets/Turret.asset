@@ -27,7 +27,7 @@ MonoBehaviour:
     minDot: 0
     maxDot: 3
     spellType: 0
-  sightRange: 20
+  sightRange: 50
   sightAngle: 360
   attacks:
   - {fileID: 11400000, guid: 91cd0f70277f43e4a88737adffeae311, type: 2}

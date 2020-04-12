@@ -6,8 +6,9 @@ public class FlyingSwarmAI : AI
 {   
     public Material colourChange;
     public GameObject matChange;
-    public override void nextUpdate(GameObject avatar, EnemyStats stats) {
+    public override bool nextUpdate(GameObject avatar, EnemyStats stats) {
         //Listen to swarm leader until death
+        return true;
     }
 
     public override void onDeath(GameObject root) {

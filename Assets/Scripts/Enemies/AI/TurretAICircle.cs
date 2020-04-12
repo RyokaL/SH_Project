@@ -6,11 +6,13 @@ public class TurretAICircle : AI {
 
     public float cooldown = 0;
     
-    public override void nextUpdate(GameObject avatar, EnemyStats stats) {
+    public override bool nextUpdate(GameObject avatar, EnemyStats stats) {
+        bool action = false;
         Transform avTransform = avatar.transform;
         Collider[] playerInRange = Physics.OverlapSphere(avTransform.position, stats.sightRange);
         foreach(Collider c in playerInRange) {
             if(c.gameObject.tag == "Player") {
+                action = true;
                 cooldown += Time.deltaTime;
                 if(cooldown >= (1 / stats.modifiers.fireRate)) {
                     Vector3 firePos = avTransform.position - avTransform.up.normalized;
@@ -23,6 +25,7 @@ public class TurretAICircle : AI {
                 }
             }
         }
+        return action;
     }
 
     public override void onDeath(GameObject root) {
