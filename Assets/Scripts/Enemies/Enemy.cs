@@ -8,7 +8,6 @@ public class Enemy : MonoBehaviour
     public EnemyStats stats;
     public HealthControl health;
     public Transform rootTransform;
-
     private bool dead;
 
     public AI ai;

@@ -37,11 +37,13 @@ public class DungeonCreator : MonoBehaviour
         return seed;
     }
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
+        Time.timeScale = 1;
         GenSettings settings = GameObject.Find("Settings").GetComponent<GenSettings>();
         maxRooms = settings.maxRooms;
         this.seed = settings.seedVal;
+        Destroy(settings.gameObject);
         Random.InitState(seed);
         //Setup and spawn initial room
         grid = new Dictionary<Vector3, Transform>();
@@ -185,6 +187,7 @@ public class DungeonCreator : MonoBehaviour
     private void generateMap() {
         while(roomsSpawned < maxRooms && roomsToProcess.Count > 0) {
             roomsToProcess.Randomise();
+            Debug.Log("Trying to place room");
             //Choose a room to process, if all exits are closed, remove and continue
             Room linkRoom = roomsToProcess[(int)Random.Range(0, roomsToProcess.Count)];
             roomsToProcess.Remove(linkRoom);
@@ -212,8 +215,10 @@ public class DungeonCreator : MonoBehaviour
 
     private void placeGoals() {
         List<GameObject> openExits = actualRooms.Where(x => x.GetComponentInChildren<Room>().getNumOpenExits() > 0).ToList();
+        int totalExits = openExits.Sum(x => x.GetComponentInChildren<Room>().getNumOpenExits());
+        int noOrbs = (totalExits < 4) ? totalExits : 4;
 
-        for(int i = 0; i < 4; i++) {
+        for(int i = 0; i < noOrbs; i++) {
             int room = Random.Range(0, openExits.Count);
             GameObject toLinkObj = openExits.ElementAt(room);
             Room toLink = toLinkObj.GetComponentInChildren<Room>();
@@ -223,11 +228,10 @@ public class DungeonCreator : MonoBehaviour
             GameObject goalRoomObj = Instantiate(goalRoom, transform.position, transform.rotation) as GameObject;
 
             if(!placeRoom(toLink, goalRoomObj)) {
-                openExits.Add(toLinkObj);
+                if(toLink.getNumOpenExits() > 1) {
+                    openExits.Add(toLinkObj);
+                }
                 i--;
-            }
-            else {
-                Debug.Log("spawned");
             }
         }
     }

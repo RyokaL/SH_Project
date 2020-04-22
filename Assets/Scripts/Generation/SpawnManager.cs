@@ -60,7 +60,23 @@ public class SpawnManager : MonoBehaviour
 
             SpawnTableDetails entry = completeSpawnTable[randIndex];
             GameObject newEnemy = Instantiate(entry.enemyType, transform.position, transform.rotation);
-            newEnemy.GetComponent<Enemy>().stats = calcStats(entry.maxStats, diff, time);
+            Enemy enClass = newEnemy.GetComponent<Enemy>();
+            enClass.stats = calcStats(entry.maxStats, diff, time);
+
+            float hue = (360 * enClass.stats.maxHealth / entry.maxStats.maxHealth) + 60;
+            if(hue > 360) {
+                hue = 0;
+            }
+            float sat = enClass.stats.maxHealth == entry.maxStats.minHealth ? 0 : 100;
+
+            if(newEnemy.name == "GroundEnemy") {
+                newEnemy.GetComponentInChildren<Renderer>().materials[1].color = Color.HSVToRGB(hue / 360, sat / 100, 1);
+            }
+            else {
+                newEnemy.GetComponentInChildren<Renderer>().material.color = Color.HSVToRGB(hue / 360, sat / 100, 1);
+            }
+
+
             spawnedEnemies.Add(newEnemy);
             Instantiate(particleEffect, transform.position, transform.rotation);
             return newEnemy;
@@ -71,12 +87,12 @@ public class SpawnManager : MonoBehaviour
     }
 
     public static EnemyStats calcStats(EnemyMaxStats max, LevelStage diff, float time) {
-        float health = max.minHealth + (int) (time/60) * max.healthMod;
+        float health = max.minHealth + (int) (time/30) * max.healthMod;
         if(health > max.maxHealth) {
             health = max.maxHealth;
         }
 
-        float speed = Random.Range(max.minSpeed, max.minSpeed + (time / 60) * max.speedMod);
+        float speed = Random.Range(max.minSpeed, max.minSpeed + (time / 20) * max.speedMod);
         if(speed > max.maxSpeed) {
             speed = max.maxSpeed;
         }
@@ -89,7 +105,7 @@ public class SpawnManager : MonoBehaviour
 
         SpellAttr attr = max.attackModifiers;
         SpellMod modifiers = new SpellMod();
-        modifiers.damage = Random.Range(attr.minDamage, attr.minDamage + attr.minDamage * time / 300);
+        modifiers.damage = Random.Range(attr.minDamage, attr.minDamage + attr.minDamage * time / 90);
         if(modifiers.damage > attr.maxDamage) {
             modifiers.damage = attr.maxDamage;
         }
@@ -100,7 +116,7 @@ public class SpawnManager : MonoBehaviour
         bool dot = (15 * (int)diff) >= dotChance;
         if(dot) {
             modifiers.dot = true;
-            modifiers.dotTick = Random.Range(attr.minDot, attr.minDot + attr.minDot * time / 600);
+            modifiers.dotTick = Random.Range(attr.minDot, attr.minDot + attr.minDot * time / 180);
             if(modifiers.dotTick > attr.maxDot) {
                 modifiers.dotTick = attr.maxDot;
             }
@@ -108,7 +124,7 @@ public class SpawnManager : MonoBehaviour
         }
 
         modifiers.TTL = Random.Range(attr.minTTL, attr.maxTTL);
-        modifiers.fireRate = Random.Range(attr.minFireRate, attr.minFireRate + attr.minFireRate * time / 900);
+        modifiers.fireRate = Random.Range(attr.minFireRate, attr.minFireRate + attr.minFireRate * time / 180);
         if(modifiers.fireRate > attr.maxFireRate) {
             modifiers.fireRate = attr.maxFireRate;
         }

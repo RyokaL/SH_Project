@@ -135,7 +135,15 @@ public class SpawnHandler : MonoBehaviour
                 
                 SpawnTableDetails entry = completeSpawnTable[randIndex];
                 GameObject newEnemy = Instantiate(entry.enemyType, spawnPos, entry.enemyType.transform.rotation);
-                newEnemy.GetComponent<Enemy>().stats = SpawnManager.calcStats(entry.maxStats, stage, timeElapsed);
+                Enemy enClass = newEnemy.GetComponent<Enemy>();
+                enClass.stats = SpawnManager.calcStats(entry.maxStats, stage, timeElapsed);
+
+                float hue = (360 * enClass.stats.maxHealth / entry.maxStats.maxHealth) + 60;
+                if(hue > 360) {
+                    hue = 0;
+                }
+                float sat = enClass.stats.maxHealth == entry.maxStats.minHealth ? 0 : 100;
+                newEnemy.GetComponentInChildren<Renderer>().material.color = Color.HSVToRGB(hue / 360, sat / 100, 1);
                 enemiesSpawned.Add(newEnemy);
 
                 if(newEnemy.GetComponent<FlyingSwarmLeaderAI>()) {

@@ -7,7 +7,6 @@ using System;
 
 public class GenSettings : MonoBehaviour
 {
-
     public InputField seed;
     public Slider rooms;
 
@@ -17,7 +16,7 @@ public class GenSettings : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(this);
     }
 
     public void startGame() {

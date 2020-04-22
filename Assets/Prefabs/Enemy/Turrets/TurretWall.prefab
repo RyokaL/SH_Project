@@ -150,6 +150,8 @@ MonoBehaviour:
     speed: 0
   health: {fileID: 1579435970119601789}
   rootTransform: {fileID: 836611895149306903}
+  colChange: {fileID: 997908051603205566, guid: b125403272a202043b9aab2548eb7959,
+    type: 3}
   ai: {fileID: 1238150874101289556}
 --- !u!114 &1579435970119601789
 MonoBehaviour:
