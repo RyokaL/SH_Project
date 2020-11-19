@@ -69,7 +69,7 @@ public class SpawnManager : MonoBehaviour
             }
             float sat = enClass.stats.maxHealth == entry.maxStats.minHealth ? 0 : 100;
 
-            if(newEnemy.name == "GroundEnemy") {
+            if(newEnemy.name.StartsWith("GroundEnemy")) {
                 newEnemy.GetComponentInChildren<Renderer>().materials[1].color = Color.HSVToRGB(hue / 360, sat / 100, 1);
             }
             else {

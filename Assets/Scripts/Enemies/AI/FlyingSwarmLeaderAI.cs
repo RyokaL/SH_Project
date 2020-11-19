@@ -88,7 +88,7 @@ public class FlyingSwarmLeaderAI : AI
                 foreach(FlyingSwarmAI d in boids) {
                     GameObject otherB = d.gameObject;
                     Rigidbody otherBR = otherB.GetComponent<Rigidbody>();
-                        //Rule 3: Match velocity of nearby boids
+                        //Velocity Matching
                         r3 = r3 + otherBR.velocity;
                 }
                 Collider[] otherObjects = Physics.OverlapSphere(leader.position, 5);
@@ -158,7 +158,7 @@ public class FlyingSwarmLeaderAI : AI
             Rigidbody boidRigid = b.GetComponent<Rigidbody>();
             GameObject boid = b.gameObject;
 
-            //Rule 1: Boids always move towards the centre of mass of the other boids
+            //Flock Centering
             Vector3 centerOfOtherBoids = (sumOfAllBoids - boidRigid.position) / (nBoids - 1);
             if(nBoids == 1) {
                 v1 = Vector3.zero;
@@ -173,11 +173,11 @@ public class FlyingSwarmLeaderAI : AI
                 GameObject otherB = d.gameObject;
                 Rigidbody otherBR = otherB.GetComponent<Rigidbody>();
                 if(otherB && otherB != b) {
-                    //Rule 2: Boids keep away from other boids and objects
+                    //Collision Avoidance
                     if((otherBR.position - boidRigid.position).magnitude < 10) {
                         r2 = r2 - (otherBR.position - boidRigid.position);
                     }
-                    //Rule 3: Match velocity of nearby boids
+                    //Velocity Matching
                     r3 = r3 + otherBR.velocity;
                 }
             }

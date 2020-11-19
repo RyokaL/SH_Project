@@ -6,8 +6,20 @@ public class FlyingSwarmAI : AI
 {   
     public Material colourChange;
     public GameObject matChange;
+
+    private float cooldown;
     public override bool nextUpdate(GameObject avatar, EnemyStats stats) {
-        //Listen to swarm leader until death
+        Transform avTransform = avatar.transform;
+        Collider[] playerInRange = Physics.OverlapSphere(avTransform.position, stats.sightRange);
+        foreach(Collider c in playerInRange) {
+            if(c.gameObject.tag == "Player") {
+                 cooldown += Time.deltaTime;
+                    if(cooldown >= (1 / stats.modifiers.fireRate)) {
+                        stats.attack.fire(stats.modifiers, avTransform.position, c.transform.position);
+                        cooldown -= (1 / stats.modifiers.fireRate);
+                    }
+            }
+        }
         return true;
     }
 

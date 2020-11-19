@@ -7,7 +7,7 @@ public class ChestSpawn : MonoBehaviour {
     public float spawnChance = 10;
 
     private GameObject spawnedChest;
-    void Start() {
+    void Update() {
         if(transform.parent != null) {
             if(Random.Range(0, 100) < spawnChance) {
                 spawnedChest = Instantiate(treasureChest, transform.position, transform.rotation) as GameObject;

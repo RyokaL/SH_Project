@@ -37,7 +37,7 @@ public class DungeonCreator : MonoBehaviour
         return seed;
     }
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         Time.timeScale = 1;
         GenSettings settings = GameObject.Find("Settings").GetComponent<GenSettings>();
@@ -187,7 +187,6 @@ public class DungeonCreator : MonoBehaviour
     private void generateMap() {
         while(roomsSpawned < maxRooms && roomsToProcess.Count > 0) {
             roomsToProcess.Randomise();
-            Debug.Log("Trying to place room");
             //Choose a room to process, if all exits are closed, remove and continue
             Room linkRoom = roomsToProcess[(int)Random.Range(0, roomsToProcess.Count)];
             roomsToProcess.Remove(linkRoom);
